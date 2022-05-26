@@ -16,4 +16,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-CMD [ "npm", "run start" ]
+# Your app binds to port 7502 so you'll use the EXPOSE instruction to have it mapped by the docker daemon:
+EXPOSE 7502
+
+CMD [ "npm", "start" ]

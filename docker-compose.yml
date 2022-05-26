@@ -6,8 +6,6 @@ services:
     container_name: simple-crm-mysql
     image: mysql
     restart: always
-    volumes:
-      - ./mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE_NAME}
@@ -15,13 +13,32 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
 
-  # nodejs:
-  #   build:
-  #     context: ./nodejs
-  #     dockerfile: Dockerfile
-  #   container_name: simple-crm-nodejs
-  #   depends_on:
-  #     - mysql
-  #   restart: always
-    
+  mongodb:
+    image: mongo
+    container_name: simple-crm-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongodb:/data/db
+
+  nodejs:
+    build:
+      context: ./nodejs
+      dockerfile: Dockerfile
+    command: [ "npm", "start" ]
+    container_name: simple-crm-nodejs
+    depends_on:
+      - mysql
+      - mongodb
+    restart: always
+    ports:
+      - 7502:7502
+    volumes:
+      - ./nodejs/:/urs/src/app
