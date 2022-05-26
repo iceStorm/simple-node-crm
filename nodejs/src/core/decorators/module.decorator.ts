@@ -23,5 +23,6 @@ export default function Module(metadata?: ModuleParams): ClassDecorator {
         // pushing routers classes to the module's metadata
         Reflect.defineMetadata(DECORATOR_KEYS.CONTROLLERS, metadata?.controllers ?? [], target)
         Reflect.defineMetadata(DECORATOR_KEYS.MODULES, metadata?.imports ?? [], target)
+        Reflect.defineMetadata(DECORATOR_KEYS.PROVIDERS, metadata?.providers ?? [], target)
     }
 }

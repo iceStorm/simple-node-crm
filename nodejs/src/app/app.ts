@@ -3,16 +3,13 @@ import path from "path"
 import express, { Application, Express } from "express"
 import * as dotenv from "dotenv"
 import logger from "morgan"
+import helmet from "helmet"
 
 // import BaseController from "src/common/base.controller"
 import AppModule from "src/app/app.module"
-import helmet from "helmet"
 import DECORATOR_KEYS from "src/core/decorators/constants"
 import { AppRoute, HTTPMethod } from "src/core/decorators/http.decorator"
-import { log } from "console"
 import { DIContainer } from "src/core/injector"
-import Container from "typedi"
-import EmployeesService from "src/modules/employees/employees.service"
 
 export type AppConstructor = {
     port: number | undefined
@@ -62,10 +59,6 @@ export default class App {
 
         this.initializeMiddlewares()
         this.initializeRoutes()
-    }
-
-    async connectDBs() {
-        //
     }
 
     /**
@@ -173,14 +166,17 @@ export default class App {
         this.showRoutingTable(routesMapTable)
 
         console.log(DIContainer)
-        const serviceInstance = Container.get(EmployeesService)
-        console.log(serviceInstance)
-        console.log(Container)
+        // console.log(DIContainer.resolve<EmployeesService>(EmployeesService).getAllEmployees())
+
+        // console.log(DIContainer)
+        // const serviceInstance = Container.get(EmployeesService)
+        // console.log(serviceInstance)
+        // console.log(Container)
     }
 
     showRoutingTable(routesMapTable: RouteMapItem[]) {
         // prevent duplicating router root path
-        this.checkDuplicatedRoutes(routesMapTable)
+        // this.checkDuplicatedRoutes(routesMapTable)
 
         const routesLength = routesMapTable.map((r) => r.path.length)
         const maxLengthRoute = Math.max(...routesLength)

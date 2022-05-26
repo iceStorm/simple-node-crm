@@ -1,10 +1,11 @@
 import * as jose from "jose"
-import EmployeesService from "../employees/employees.service"
-
 import jwt from "jsonwebtoken"
-import { Service } from "typedi"
 
-@Service()
+import EmployeesService from "../employees/employees.service"
+import { Injectable } from "src/core/decorators"
+// import { Service } from "typedi"
+
+@Injectable()
 export default class UserService {
     constructor(private readonly employeesService: EmployeesService) {}
 

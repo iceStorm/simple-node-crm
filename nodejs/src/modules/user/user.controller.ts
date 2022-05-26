@@ -1,17 +1,18 @@
 import { Controller } from "src/core/decorators"
 import { Request, Response } from "express"
 import { Get, Post } from "src/core/decorators/http.decorator"
-import userService from "./user.service"
 import UserService from "./user.service"
 import { Authenticated } from "./middlewares/authenticated.middleware"
+import { Roles } from "./middlewares/role.middleware"
 
 @Controller("/users")
 export default class UserController {
     constructor(private readonly usersService: UserService) {}
 
-    @Get("", Authenticated)
+    @Authenticated
+    @Get("")
     all(req: Request, res: Response) {
-        res.status(200).send("All users")
+        res.status(200).send("All users.")
     }
 
     @Post("/login")

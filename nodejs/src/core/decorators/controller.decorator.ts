@@ -1,3 +1,4 @@
+import { DIContainer } from "../injector"
 import DECORATOR_KEYS from "./constants"
 import { AppRoute } from "./http.decorator"
 
@@ -7,35 +8,26 @@ import { AppRoute } from "./http.decorator"
  * @returns
  */
 export default function Controller(rootPath: string): ClassDecorator {
-    return function (target: any, s?: any) {
+    return function (target: any) {
         const routes = Reflect.getMetadata(DECORATOR_KEYS.ROUTES, target)
         Reflect.defineMetadata(DECORATOR_KEYS.ROOT_PATH, rootPath, target)
 
-        console.log(target, s)
-    }
-}
-const requiredMetadataKey = Symbol("required")
+        const constructorParams = Reflect.getMetadata("design:paramtypes", target)
 
-export function validate(
-    target: any,
-    propertyName: string,
-    descriptor: TypedPropertyDescriptor<Function>
-) {
-    let method = descriptor.value!
+        // console.log(target, typeof target, constructorParams)
+        // console.log("DIContainer:", DIContainer)
 
-    descriptor.value = function () {
-        let requiredParameters: number[] = Reflect.getOwnMetadata(
-            requiredMetadataKey,
-            target,
-            propertyName
-        )
-        if (requiredParameters) {
-            for (let parameterIndex of requiredParameters) {
-                if (parameterIndex >= arguments.length || arguments[parameterIndex] === undefined) {
-                    throw new Error("Missing required argument.")
-                }
-            }
-        }
-        return method.apply(this, arguments)
+
+
+        return target
+
+        // constructorParams.forEach((param: any) => {
+        //     if (DIContainer.resolve<typeof param.name>(param)) {
+
+        //     }
+        // })
+
+        // return DIContainer.resolve(target)
+        // return Reflect.construct(target, DIContainer.resolve<any>(constructorParams[0]))
     }
 }

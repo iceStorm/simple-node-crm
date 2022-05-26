@@ -1,14 +1,10 @@
-// import { Service } from "src/core/decorators"
-// import { Injectable } from "src/core/decorators"
 import Employee from "./employees.model"
 import EmployeesStore from "./employees.store"
+import { Injectable } from "src/core/decorators"
 
-import { Inject, Service } from "typedi"
-
-// @Injectable()
-@Service()
+@Injectable()
 export default class EmployeesService {
-    constructor(private readonly employeeStore: EmployeesStore) {}
+    constructor(public employeeStore: EmployeesStore) {}
 
     getAllEmployees(): Employee[] | undefined {
         return this.employeeStore.getAll()

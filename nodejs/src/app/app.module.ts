@@ -5,7 +5,7 @@ import AppController from "./app.controller"
 import AppService from "./app.service"
 
 @Module({
-    imports: [UserModule, EmployeesModule],
+    // imports: [UserModule, EmployeesModule],
     providers: [AppService],
     controllers: [AppController],
 })

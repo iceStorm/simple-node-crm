@@ -23,8 +23,14 @@ export default function Injectable(options?: InjectableOptions) {
     }
 }
 
-export function Inject(token?: string | symbol) {
-    return function (target: any) {
-        console.log(target)
+export function Inject(token?: string | symbol): ParameterDecorator {
+    return function (target, key, parameterIndex) {
+        console.log(target, key, parameterIndex)
+
+        Object.defineProperty(target, key, {
+            get: () => DIContainer.get(token),
+            enumerable: true,
+            configurable: true,
+        })
     }
 }

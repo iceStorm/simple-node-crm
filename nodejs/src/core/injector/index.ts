@@ -1,3 +1,4 @@
+import { string } from "joi"
 import "reflect-metadata"
 
 export type Provider = {
@@ -6,30 +7,20 @@ export type Provider = {
 }
 
 export const DIContainer = new (class {
-    private providers: Provider[] = []
+    private providers: Map<string | symbol, any> = new Map<string | symbol, any>()
 
     /**
      * Putting a provider with unique token to the centralized DI Container.
      */
     put(token: string | symbol, value: any) {
-        this.providers.push({
-            token,
-            instance: value,
-        })
+        this.providers.set(token, value)
     }
 
     /**
      * Getting the declared instance of the target class
      * @param target The class want to be resolved
      */
-    resolve<T>(target: any): T {
-        // tokens are required dependencies
-        const tokens = Reflect.getMetadata("design:paramtypes", target) || []
-
-        // tokens are required dependencies
-        const injections = tokens.map((token: any) => DIContainer.resolve<any>(token))
-
-        // initialize instance
-        return new target(...injections)
+    get(token: any): typeof token | undefined {
+        this.providers.get(token)
     }
 })()

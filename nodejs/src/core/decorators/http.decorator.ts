@@ -14,11 +14,10 @@ export type AppRoute = {
 export type AppMiddleware = (request: Request, response: Response, next: NextFunction, ...params: any[]) => void
 
 function HTTPMethodDecoratorFactory(method: HTTPMethod) {
-    return function (path: string, ...middlewares: AppMiddleware[]): MethodDecorator {
+    return function (path: string): MethodDecorator {
         return function (target, propertyKey, descriptor) {
             // getting the method's class (class type, not a string)
             const className = target.constructor
-            // console.log(propertyKey, descriptor)
 
             // getting the className's "ROUTES" metadata that holds routes
             const routes: Array<AppRoute> = Reflect.hasMetadata(DECORATOR_KEYS.ROUTES, className)
@@ -30,7 +29,6 @@ function HTTPMethodDecoratorFactory(method: HTTPMethod) {
                 path: path,
                 httpMethod: method,
                 method: descriptor.value, // propertyKey is the function name being decorated,
-                middlewares: middlewares,
             })
 
             // re-assign the ROUTES metadata to the className

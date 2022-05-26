@@ -4,15 +4,25 @@ import jwt from "jsonwebtoken"
 
 export type Role = "President" | "Manager" | "Leader" | "Staff"
 
-// wrapper for receiving params
+/**
+ * Restrict which roles can be accessed this route.
+ * @param roles Allowed roles for this route
+ * @returns
+ */
 export const Roles = (...roles: Role[]) => {
-    // actual middleware function
-    return async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            
-            next()
-        } catch (error) {
-            res.status(500).send(error)
+    return (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
+        const originalMethod = descriptor.value
+
+        descriptor.value = function (req: Request, res: Response, next: NextFunction) {
+            try {
+                console.log("roles")
+
+                next()
+            } catch (error) {
+                res.status(500).send(error)
+            }
+
+            return originalMethod.bind(this)(req, res, next)
         }
     }
 }

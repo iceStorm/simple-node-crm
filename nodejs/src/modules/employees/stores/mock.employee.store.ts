@@ -1,9 +1,10 @@
 import { Injectable } from "src/core/decorators"
+import { Service } from "typedi"
 import Employee from "../employees.model"
 import EmployeesStore from "../employees.store"
 
 @Injectable()
-export default class MockEmployeeStore implements EmployeesStore {
+class MockEmployeeStore implements EmployeesStore {
     private data: Employee[] = []
 
     constructor() {
@@ -95,3 +96,5 @@ export default class MockEmployeeStore implements EmployeesStore {
         }
     }
 }
+
+export default MockEmployeeStore

@@ -14,7 +14,8 @@ export default class EmployeesController {
         console.log(this.employeesService)
     }
 
-    @Get("", Authenticated)
+    @Get("")
+    @Authenticated
     getAll(req: Request, res: Response) {
         res.status(200).send(this.employeesService.getAllEmployees())
     }
@@ -38,7 +39,7 @@ export default class EmployeesController {
     // SINGLE RESOURCE ROUTES
     //
 
-    @Get("/:id", ContainsIdParam, ExistEmployeeById)
+    @Get("/:id")
     getById(req: Request, res: Response) {
         const foundEmployee = this.employeesService.getEmployeeById(parseInt(req.params["id"]))
 
@@ -49,12 +50,12 @@ export default class EmployeesController {
         return res.status(200).send(foundEmployee)
     }
 
-    @Put("/:id", ContainsIdParam, ExistEmployeeById)
+    @Put("/:id")
     updateById(req: Request, res: Response) {
         res.status(200).send("update emp by id")
     }
 
-    @Delete("/:id", ContainsIdParam, ExistEmployeeById)
+    @Delete("/:id")
     deleteById(req: Request, res: Response) {
         res.send(this.employeesService.deleteEmployeeById(parseInt(req.params["id"])))
     }

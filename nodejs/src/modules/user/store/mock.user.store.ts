@@ -1,6 +1,8 @@
+import { Injectable } from "src/core/decorators"
 import { User } from "../user.model"
 import UserStore from "../user.store"
 
+@Injectable()
 export class MockUserStore implements UserStore {
     private users: User[] = []
 

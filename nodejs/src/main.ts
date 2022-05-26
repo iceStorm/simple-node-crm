@@ -1,35 +1,32 @@
+// DBs
+import { connectMongoDB } from "./common/db/mongodb"
+import { sequelize, knex } from "./common/db/mysql"
+
+// App
 import App from "src/app/app"
 import AppModule from "./app/app.module"
-// import knexProvider from "./common/db/mysql/knex"
-// import sequelize from "./common/db/mysql/sequelize"
-import Employee from "./modules/employees/employees.model"
-const port = (process.env.PORT || 7502) as number
 
 const app = new App({
-    port: port,
+    port: (process.env.PORT || 7502) as number,
     rootModule: AppModule,
 })
 
-app.connectDBs()
-    .then(() => {
-        app.listen()
+// connectMongoDB()
+//     .then((mongo) => {
+//         console.log("MongoDB connected!")
 
-        // knexProvider
-            // .raw("select * from users")
-            // .then((users) => {
-            //     console.log(users)
-            // })
-            // .catch((err) => {
-            //     console.log(err)
-            // })
+//         app.listen()
 
-        // sequelize
-        //     .query("select * from users")
-        //     .then((users: any) => {
-        //         console.log(users)
-        //     })
-        //     .catch((err: any) => {
-        //         console.log(err)
-        //     })
-    })
-    .catch((err) => console.log(err))
+//         // const serviceInstance = Container.get(EmployeesService)
+//         // console.log(serviceInstance.getAllEmployees())
+
+//         // we request an instance of ExampleService from TypeDI
+
+//         // serviceInstance.injectedService.printMessage()
+//         // logs "I am alive!" to the console
+//     })
+//     .catch((error) => {
+//         console.log(error)
+//     })
+
+app.listen()
