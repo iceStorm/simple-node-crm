@@ -170,16 +170,33 @@ export default class App {
             this._instance.use(routerRootPath, router)
         })
 
-        console.info(controllers)
-        console.table(routesMapTable)
+        this.showRoutingTable(routesMapTable)
 
         console.log(DIContainer)
         const serviceInstance = Container.get(EmployeesService)
         console.log(serviceInstance)
         console.log(Container)
+    }
 
+    showRoutingTable(routesMapTable: RouteMapItem[]) {
         // prevent duplicating router root path
         this.checkDuplicatedRoutes(routesMapTable)
+
+        const routesLength = routesMapTable.map((r) => r.path.length)
+        const maxLengthRoute = Math.max(...routesLength)
+
+        const functionsLength = routesMapTable.map((r) => r.function.length)
+        const maxLengthFunction = Math.max(...functionsLength)
+
+        console.table(
+            routesMapTable.map((route) => {
+                return {
+                    ...route,
+                    path: route.path.padEnd(maxLengthRoute, " "),
+                    function: route.function.padEnd(maxLengthFunction, " "),
+                }
+            })
+        )
     }
 
     checkDuplicatedRoutes(routes: RouteMapItem[]) {

@@ -4,12 +4,12 @@ import { Get } from "src/core/decorators/http.decorator"
 
 @Controller("/")
 export default class AppController {
-    @Get("/")
+    @Get("")
     index(req: Request, res: Response) {
         res.status(200).send("Server running Ok.")
     }
 
-    @Get("/hi")
+    @Get("hi")
     hi(req: Request, res: Response) {
         res.status(200).send("Hi")
     }
