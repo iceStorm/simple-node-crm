@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mysql:
+    platform: linux/x86_64
+    container_name: simple-crm-mysql
+    image: mysql
+    restart: always
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE_NAME}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - 3306:3306
+
+  # nodejs:
+  #   build:
+  #     context: ./nodejs
+  #     dockerfile: Dockerfile
+  #   container_name: simple-crm-nodejs
+  #   depends_on:
+  #     - mysql
+  #   restart: always
+    
