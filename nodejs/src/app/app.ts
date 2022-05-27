@@ -1,6 +1,6 @@
 import path from "path"
 
-import express, { Application, Express } from "express"
+import express, { Application, Express, Handler, NextFunction, Request, Response } from "express"
 import * as dotenv from "dotenv"
 import logger from "morgan"
 import helmet from "helmet"
@@ -10,6 +10,8 @@ import AppModule from "src/app/app.module"
 import DECORATOR_KEYS from "src/core/decorators/constants"
 import { AppRoute, HTTPMethod } from "src/core/decorators/http.decorator"
 import { DIContainer } from "src/core/injector"
+import Logger from "src/common/logger"
+import { log } from "console"
 
 export type AppConstructor = {
     port: number | undefined
@@ -89,6 +91,11 @@ export default class App {
     private initializeMiddlewares() {
         this._instance.use(logger("dev"))
 
+        // error middleware
+        this._instance.use((err: any, req: Request, res: Response, next: NextFunction) => {
+            Logger.error(err)
+        })
+
         this._instance.use(
             helmet({
                 xssFilter: true,
@@ -112,10 +119,7 @@ export default class App {
         while (modules.length > 0) {
             const firstModule = modules.shift()
 
-            const currentModuleControllers = Reflect.getMetadata(
-                DECORATOR_KEYS.CONTROLLERS,
-                firstModule
-            )
+            const currentModuleControllers = Reflect.getMetadata(DECORATOR_KEYS.CONTROLLERS, firstModule)
             if (currentModuleControllers && currentModuleControllers.length > 0) {
                 controllers.push(...currentModuleControllers)
             }
@@ -137,18 +141,21 @@ export default class App {
             const routerHandlers = Reflect.getMetadata(DECORATOR_KEYS.ROUTES, controller)
 
             // each controller has its own router on the root path
-            const router = express.Router({ mergeParams: true })
+            const router = express.Router()
+            const controllerInstance = new controller()
+            // console.log(Reflect.getMetadata("design:paramtypes", controller))
 
             routerHandlers.forEach((handler: AppRoute) => {
-                const newController = new controller()
+                // console.log(controllerInstance)
 
                 // dynamically use middlewares
-                handler.middlewares?.forEach((middleware) => {
-                    router[handler.httpMethod](handler.path, middleware).bind(newController)
-                })
+                // handler.middlewares?.forEach((middleware) => {
+                //     router[handler.httpMethod](handler.path, middleware).bind(newController)
+                // })
 
                 // use the actual handler method at the end (middlewares need to be run first)
-                router[handler.httpMethod](handler.path, handler.method).bind(newController)
+                router[handler.httpMethod](handler.path, handler.method.bind(controllerInstance))
+                // console.log(handler)
 
                 routesMapTable.push({
                     router: routerRootPath,
@@ -164,9 +171,7 @@ export default class App {
         })
 
         this.showRoutingTable(routesMapTable)
-
         console.log(DIContainer)
-        // console.log(DIContainer.resolve<EmployeesService>(EmployeesService).getAllEmployees())
 
         // console.log(DIContainer)
         // const serviceInstance = Container.get(EmployeesService)

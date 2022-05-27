@@ -4,7 +4,9 @@ import UserStore from "src/modules/user/user.store"
 
 @Injectable()
 export default class AppService {
-    constructor(private readonly userStore: UserStore) {}
+    private readonly userStore!: UserStore
+
+    constructor() {}
 
     getHello() {
         return "Hello World"

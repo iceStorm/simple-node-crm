@@ -21,6 +21,6 @@ export const DIContainer = new (class {
      * @param target The class want to be resolved
      */
     get(token: any): typeof token | undefined {
-        this.providers.get(token)
+        return this.providers.get(token)
     }
 })()

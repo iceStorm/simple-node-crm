@@ -7,27 +7,17 @@ import { AppRoute } from "./http.decorator"
  * @param rootPath Router root path
  * @returns
  */
-export default function Controller(rootPath: string): ClassDecorator {
+export default function Controller(rootPath: string) {
     return function (target: any) {
-        const routes = Reflect.getMetadata(DECORATOR_KEYS.ROUTES, target)
         Reflect.defineMetadata(DECORATOR_KEYS.ROOT_PATH, rootPath, target)
 
-        const constructorParams = Reflect.getMetadata("design:paramtypes", target)
+        // const constructorParams = Reflect.getMetadata("design:paramtypes", target)
+        // console.log(constructorParams)
 
-        // console.log(target, typeof target, constructorParams)
-        // console.log("DIContainer:", DIContainer)
-
-
-
-        return target
-
-        // constructorParams.forEach((param: any) => {
-        //     if (DIContainer.resolve<typeof param.name>(param)) {
-
+        // return class extends target {
+        //     constructor() {
+        //         super()
         //     }
-        // })
-
-        // return DIContainer.resolve(target)
-        // return Reflect.construct(target, DIContainer.resolve<any>(constructorParams[0]))
+        // }
     }
 }

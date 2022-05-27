@@ -5,15 +5,17 @@ import jwt from "jsonwebtoken"
 /**
  * Indicate that an incoming request contains valid JWT token.
  */
-export const Authenticated = function (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) {
+export const Authenticated = function (target: Object, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value
 
     descriptor.value = function (req: Request, res: Response, next: NextFunction) {
+        console.log("Authenticated this:", this)
+
         try {
             let bearer = req.headers.authorization?.split("Bearer ")
 
             if (bearer == undefined) {
-                return res.status(400).end("the request did not provide a bearer token")
+                return res.status(401).end("The request did not provide a bearer token for authentication")
             }
 
             // token provided
@@ -25,7 +27,8 @@ export const Authenticated = function (target: Object, propertyKey: string, desc
 
             next()
         } catch (error) {
-            res.status(500).send(error)
+            next(error)
+            res.status(401).send("Token invalid")
         }
 
         return originalMethod.bind(this)(req, res, next)

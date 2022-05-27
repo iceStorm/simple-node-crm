@@ -13,16 +13,15 @@ export const Roles = (...roles: Role[]) => {
     return (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
         const originalMethod = descriptor.value
 
-        descriptor.value = function (req: Request, res: Response, next: NextFunction) {
+        descriptor.value = function (req: Request, res: Response) {
             try {
                 console.log("roles")
-
-                next()
+                // next()
             } catch (error) {
                 res.status(500).send(error)
             }
 
-            return originalMethod.bind(this)(req, res, next)
+            return originalMethod.bind(this)(req, res)
         }
     }
 }
