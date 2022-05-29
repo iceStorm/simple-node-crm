@@ -11,7 +11,9 @@ import DECORATOR_KEYS from "src/core/decorators/constants"
 import { AppRoute, HTTPMethod } from "src/core/decorators/http.decorator"
 import { DIContainer } from "src/core/injector"
 import Logger from "src/common/logger"
-import { log } from "console"
+import MockEmployeeStore from "src/modules/employees/stores/mock.employee.store"
+import { MySQLEmployeesStore } from "src/modules/user/stores/mysql.user.store"
+import { MySQLCustomerStore } from "src/modules/customers/stores/mysql.customer.store"
 
 export type AppConstructor = {
     port: number | undefined
@@ -53,6 +55,7 @@ export default class App {
 
     constructor(params: AppConstructor) {
         this.loadEnv()
+        this.initDependencies()
 
         this._instance = express()
         this._port = process.env.PORT || params.port
@@ -61,6 +64,12 @@ export default class App {
 
         this.initializeMiddlewares()
         this.initializeRoutes()
+    }
+
+    initDependencies() {
+        DIContainer.put("MySQLUserStore", new MySQLEmployeesStore())
+        DIContainer.put("MySQLCustomerStore", new MySQLCustomerStore())
+        // DIContainer.put("MockEmployeeStore", new MockEmployeeStore())
     }
 
     /**
@@ -177,6 +186,7 @@ export default class App {
         // const serviceInstance = Container.get(EmployeesService)
         // console.log(serviceInstance)
         // console.log(Container)
+        // console.log(DIContainer.get(EmployeesStore))
     }
 
     showRoutingTable(routesMapTable: RouteMapItem[]) {

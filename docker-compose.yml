@@ -1,7 +1,13 @@
 version: '3.8'
 
+networks:
+  simpleCRM:
+    driver: bridge
+
 services:
   mysql:
+    networks:
+      - simpleCRM
     platform: linux/x86_64
     container_name: simple-crm-mysql
     image: mysql
@@ -17,6 +23,8 @@ services:
       - ./mysql:/var/lib/mysql
 
   mongodb:
+    networks:
+      - simpleCRM
     image: mongo
     container_name: simple-crm-mongodb
     restart: always
@@ -29,6 +37,8 @@ services:
       - ./mongodb:/data/db
 
   nodejs:
+    networks:
+      - simpleCRM
     build:
       context: ./nodejs
       dockerfile: Dockerfile
@@ -40,5 +50,6 @@ services:
     restart: always
     ports:
       - 7502:7502
+    # specify a volume for live-reloading when source code change (in combination with nodemon)
     volumes:
       - ./nodejs/:/urs/src/app

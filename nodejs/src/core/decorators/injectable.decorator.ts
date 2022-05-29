@@ -1,5 +1,3 @@
-import AppService from "src/app/app.service"
-import { MockUserStore } from "src/modules/user/store/mock.user.store"
 import { DIContainer } from "../injector"
 
 export enum InjectableScope {
@@ -21,6 +19,7 @@ export interface InjectableOptions {
  */
 export default function Injectable(options?: InjectableOptions) {
     return function (target: any) {
+        // console.log("DIContainer putting:", target)
         DIContainer.put(target.name, new target())
     }
 }
@@ -29,7 +28,7 @@ export function Inject() {
     return function (target: Object, key: any) {
         const constructorParams = Reflect.getMetadata("design:paramtypes", target)
         // console.log(constructorParams)
-        console.log(target, key)
+        // console.log(target, key)
         // console.log(DIContainer)
 
         // Object.defineProperty(target, key, {

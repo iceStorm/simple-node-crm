@@ -1,17 +1,15 @@
 import { Controller } from "src/core/decorators"
 import { Request, Response } from "express"
 import { Get, Post, Put, Delete } from "src/core/decorators/http.decorator"
-import { ContainsIdParam, ExistEmployeeById } from "./employees.middleware"
 
 import EmployeesService from "./employees.service"
-// import { Inject } from "src/core/decorators/injectable.decorator"
-import { Inject } from "typedi"
 import { Authenticated } from "../user/middlewares/authenticated.middleware"
+import { DIContainer } from "src/core/injector"
 
 @Controller("/employees")
 export default class EmployeesController {
-    constructor(@Inject("EmployeesService") public readonly employeesService: EmployeesService) {
-        console.log(this.employeesService)
+    constructor(public readonly employeesService: EmployeesService) {
+        this.employeesService = employeesService ?? DIContainer.get(EmployeesService)
     }
 
     @Get("")

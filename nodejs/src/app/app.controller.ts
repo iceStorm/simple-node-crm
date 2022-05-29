@@ -5,19 +5,12 @@ import { Inject } from "src/core/decorators/injectable.decorator"
 import { DIContainer } from "src/core/injector"
 import { Authenticated } from "src/modules/user/middlewares/authenticated.middleware"
 import { Roles } from "src/modules/user/middlewares/role.middleware"
-// import { InjectMany, Inject } from "typedi"
 import AppService from "./app.service"
 
 @Controller("")
 export default class AppController {
-    // inject at app.ts
-    // @Inject()
-    // private appService!: AppService
-
     constructor(private appService: AppService) {
-        console.log("received appService:", this)
-        // this.appService = DIContainer.get('AppService')
-        // console.log(this)
+        this.appService = appService ?? DIContainer.get(AppService)
     }
 
     @Get("/")
@@ -28,10 +21,8 @@ export default class AppController {
 
     @Get("/hi")
     @Authenticated
-    @Roles("President")
+    // @Roles("President")
     hi(req: Request, res: Response) {
         res.status(200).send(this.appService.getHello())
-        // console.log(this)
-        // res.send("hi")
     }
 }

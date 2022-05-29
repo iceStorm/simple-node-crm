@@ -4,10 +4,12 @@ import Employee from "../employees.model"
 import EmployeesStore from "../employees.store"
 
 @Injectable()
-class MockEmployeeStore implements EmployeesStore {
+class MockEmployeeStore extends EmployeesStore {
     private data: Employee[] = []
 
     constructor() {
+        super();
+        
         // MOCK DATA
         this.data.push(
             new Employee(

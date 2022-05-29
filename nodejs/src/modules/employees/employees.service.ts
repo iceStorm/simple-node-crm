@@ -1,10 +1,13 @@
 import Employee from "./employees.model"
 import EmployeesStore from "./employees.store"
 import { Injectable } from "src/core/decorators"
+import { DIContainer } from "src/core/injector"
 
 @Injectable()
 export default class EmployeesService {
-    constructor(public employeeStore: EmployeesStore) {}
+    constructor(public employeeStore: EmployeesStore) {
+        this.employeeStore = employeeStore ?? DIContainer.get(EmployeesStore)
+    }
 
     getAllEmployees(): Employee[] | undefined {
         return this.employeeStore.getAll()

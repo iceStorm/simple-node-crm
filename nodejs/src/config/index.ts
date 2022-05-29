@@ -1,7 +1,16 @@
 import path from "node:path/win32"
 import dbConfig from "./db.config"
 
-export const AppConfig = {
-    rootFolder: path.resolve(__dirname, "../../"),
-    dbConfig,
+export class AppConfig {
+    static get rootFolder() {
+        return path.resolve(__dirname, "../../")
+    }
+
+    static get secret() {
+        return process.env["SECRET"]
+    }
+
+    static get dbConfig() {
+        return dbConfig
+    }
 }
