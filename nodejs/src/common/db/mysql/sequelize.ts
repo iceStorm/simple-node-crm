@@ -1,14 +1,15 @@
 import { Sequelize, Model, DataTypes } from "sequelize"
+import { AppConfig } from "../../../config"
 
-const sequelize = new Sequelize({
+const sequelizeAdapter = new Sequelize({
     dialect: "mysql",
-    host: "mysql",
-    port: 3306,
-    database: "bvu_envoy_db",
-    username: "root",
-    password: "7px#V5fV1@Jp",
+    host: AppConfig.dbConfig.mysql.host,
+    port: AppConfig.dbConfig.mysql.port,
+    database: AppConfig.dbConfig.mysql.database,
+    username: AppConfig.dbConfig.mysql.user,
+    password: AppConfig.dbConfig.mysql.password,
     protocol: "tcp",
     ssl: true,
 })
 
-export default sequelize
+export default sequelizeAdapter

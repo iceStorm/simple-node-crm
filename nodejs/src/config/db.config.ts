@@ -3,7 +3,8 @@ const dbConfig = {
         port: 3306,
         host: "localhost",
         user: "root",
-        password: process.env["MYSQL_PASSWORD"],
+        password: "9n89v7UkdNmm9tDC",
+        database: "simple_node_crm_db",
     },
 }
 

@@ -1,9 +1,9 @@
 import Module from "src/core/decorators/module.decorator"
 import EmployeesController from "./employees.controller"
-import { MySQLEmployeesStore } from "../user/stores/mysql.user.store"
+import { MySQLUserStore } from "../user/stores/mysql.user.store"
 
 @Module({
     controllers: [EmployeesController],
-    providers: [MySQLEmployeesStore],
+    providers: [MySQLUserStore],
 })
 export default class EmployeesModule {}

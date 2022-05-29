@@ -1,29 +1,37 @@
 import { Injectable } from "src/core/decorators"
-import Employee from "src/modules/employees/employees.model"
-import EmployeesStore from "src/modules/employees/employees.store"
+import User from "../user.model"
+import UserStore from "../user.store"
 
 @Injectable()
-export class MySQLEmployeesStore extends EmployeesStore {
-    constructor() {
-        super()
+export class MySQLUserStore extends UserStore {
+    async authenticate(username: string, password: string) {
+        return User.findOneBy({
+            username,
+            password,
+        })
     }
 
-    getAll(): Employee[] {
+    getAll(): Promise<User[]> {
         throw new Error("Method not implemented.")
     }
-    getById(id: number): Employee {
+
+    getById(id: number): Promise<User> {
         throw new Error("Method not implemented.")
     }
-    softRemoveById(id: number): Employee | undefined {
+
+    softRemoveById(id: number): Promise<User | undefined> {
         throw new Error("Method not implemented.")
     }
-    permanentRemoveById(id: number): Employee | undefined {
+
+    permanentRemoveById(id: number): Promise<User | undefined> {
         throw new Error("Method not implemented.")
     }
-    create(): Employee {
+
+    create(): Promise<User> {
         throw new Error("Method not implemented.")
     }
-    updateById(id: number, updatedEmployee: Employee): Employee | undefined {
+
+    updateById(id: number, updatedData: User): Promise<User | undefined> {
         throw new Error("Method not implemented.")
     }
 }

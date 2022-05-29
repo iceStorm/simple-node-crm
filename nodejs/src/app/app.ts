@@ -12,12 +12,11 @@ import { AppRoute, HTTPMethod } from "src/core/decorators/http.decorator"
 import { DIContainer } from "src/core/injector"
 import Logger from "src/common/logger"
 import MockEmployeeStore from "src/modules/employees/stores/mock.employee.store"
-import { MySQLEmployeesStore } from "src/modules/user/stores/mysql.user.store"
+import { MySQLUserStore } from "src/modules/user/stores/mysql.user.store"
 import { MySQLCustomerStore } from "src/modules/customers/stores/mysql.customer.store"
 
 export type AppConstructor = {
     port: number | undefined
-    controllers?: any[]
     rootModule: AppModule
 }
 
@@ -40,11 +39,6 @@ export default class App {
         return this._instance
     }
 
-    private _controllers?: any[]
-    public get controllers() {
-        return this._controllers
-    }
-
     private _rootModule: any
     public get rootModule() {
         return this._rootModule
@@ -59,7 +53,6 @@ export default class App {
 
         this._instance = express()
         this._port = process.env.PORT || params.port
-        this._controllers = params.controllers
         this._rootModule = params.rootModule
 
         this.initializeMiddlewares()
@@ -67,7 +60,7 @@ export default class App {
     }
 
     initDependencies() {
-        DIContainer.put("MySQLUserStore", new MySQLEmployeesStore())
+        DIContainer.put("MySQLUserStore", new MySQLUserStore())
         DIContainer.put("MySQLCustomerStore", new MySQLCustomerStore())
         // DIContainer.put("MockEmployeeStore", new MockEmployeeStore())
     }
@@ -101,9 +94,9 @@ export default class App {
         this._instance.use(logger("dev"))
 
         // error middleware
-        this._instance.use((err: any, req: Request, res: Response, next: NextFunction) => {
-            Logger.error(err)
-        })
+        // this._instance.use((err: any, req: Request, res: Response, next: NextFunction) => {
+        //     Logger.error(err)
+        // })
 
         this._instance.use(
             helmet({
@@ -142,29 +135,20 @@ export default class App {
         // for logging routes table
         const routesMapTable: Array<RouteMapItem> = []
 
-        controllers.forEach((controller) => {
+        for (const controller of controllers) {
             // getting controller's metadata
             const routerRootPath = Reflect.getMetadata(DECORATOR_KEYS.ROOT_PATH, controller)
 
             // getting router's handler methods (getAll, getById...)
-            const routerHandlers = Reflect.getMetadata(DECORATOR_KEYS.ROUTES, controller)
+            const routerHandlers = Reflect.getMetadata(DECORATOR_KEYS.ROUTES, controller) ?? []
 
             // each controller has its own router on the root path
             const router = express.Router()
             const controllerInstance = new controller()
-            // console.log(Reflect.getMetadata("design:paramtypes", controller))
 
-            routerHandlers.forEach((handler: AppRoute) => {
-                // console.log(controllerInstance)
-
-                // dynamically use middlewares
-                // handler.middlewares?.forEach((middleware) => {
-                //     router[handler.httpMethod](handler.path, middleware).bind(newController)
-                // })
-
+            for (const handler of routerHandlers) {
                 // use the actual handler method at the end (middlewares need to be run first)
-                router[handler.httpMethod](handler.path, handler.method.bind(controllerInstance))
-                // console.log(handler)
+                router[(handler as AppRoute).httpMethod](handler.path, handler.method.bind(controllerInstance))
 
                 routesMapTable.push({
                     router: routerRootPath,
@@ -173,20 +157,14 @@ export default class App {
                     function: `${controller.name}.${handler.method.name}`,
                     method: handler.httpMethod,
                 })
-            })
+            }
 
             // apply router as middleware
             this._instance.use(routerRootPath, router)
-        })
+        }
 
         this.showRoutingTable(routesMapTable)
         console.log(DIContainer)
-
-        // console.log(DIContainer)
-        // const serviceInstance = Container.get(EmployeesService)
-        // console.log(serviceInstance)
-        // console.log(Container)
-        // console.log(DIContainer.get(EmployeesStore))
     }
 
     showRoutingTable(routesMapTable: RouteMapItem[]) {

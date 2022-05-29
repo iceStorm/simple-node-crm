@@ -5,25 +5,23 @@ import CustomerStore from "../customer.store"
 
 @Injectable()
 export class MySQLCustomerStore extends CustomerStore {
-    getAll(): customerModel[] {
+    getAll(): Promise<customerModel[]> {
         throw new Error("Method not implemented.")
     }
-    getById(id: number): customerModel {
+    getById(id: number): Promise<customerModel> {
         throw new Error("Method not implemented.")
     }
-    softRemoveById(id: number): customerModel | undefined {
+    softRemoveById(id: number): Promise<customerModel | undefined> {
         throw new Error("Method not implemented.")
     }
-    permanentRemoveById(id: number): customerModel | undefined {
+    permanentRemoveById(id: number): Promise<customerModel | undefined> {
         throw new Error("Method not implemented.")
     }
-    create(): customerModel {
+    create(): Promise<customerModel> {
         throw new Error("Method not implemented.")
     }
-    updateById(id: number, updatedData: customerModel): customerModel | undefined {
+    updateById(id: number, updatedData: customerModel): Promise<customerModel | undefined> {
         throw new Error("Method not implemented.")
     }
-    constructor() {
-        super()
-    }
+    
 }

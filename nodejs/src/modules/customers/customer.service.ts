@@ -9,23 +9,23 @@ export default class CustomerService {
         this.customerStore = customerStore ?? DIContainer.get(CustomerStore)
     }
 
-    getAllCustomers(): Customer[] | undefined {
-        return this.customerStore.getAll()
-    }
+    // getAllCustomers(): Customer[] | undefined {
+    //     return this.customerStore.getAll()
+    // }
 
-    getCustomerById(id: number): Customer | undefined {
-        return this.customerStore.getById(id)
-    }
+    // getCustomerById(id: number): Customer | undefined {
+    //     return this.customerStore.getById(id)
+    // }
 
-    deleteCustomerById(id: number): Customer | undefined {
-        return this.customerStore.permanentRemoveById(id)
-    }
+    // deleteCustomerById(id: number): Customer | undefined {
+    //     return this.customerStore.permanentRemoveById(id)
+    // }
 
-    createCustomer(): Customer {
-        return this.customerStore.create()
-    }
+    // createCustomer(): Customer {
+    //     return this.customerStore.create()
+    // }
 
-    updateCustomer(id: number, updatedCustomer: Customer): Customer | undefined {
-        return this.customerStore.updateById(id, updatedCustomer)
-    }
+    // updateCustomer(id: number, updatedCustomer: Customer): Customer | undefined {
+    //     return this.customerStore.updateById(id, updatedCustomer)
+    // }
 }

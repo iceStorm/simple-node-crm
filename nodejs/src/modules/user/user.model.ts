@@ -1,22 +1,15 @@
-export class User {
-    id?: string
-    username: string
-    firstName?: string
-    lastName?: string
+import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
+import Employee from "../employees/employees.model"
 
-    constructor(
-        username: string,
-        id?: string,
-        firstName?: string,
-        lastName?: string,
-    ) {
-        this.id = id
-        this.username = username
-        this.firstName = firstName
-        this.lastName = lastName
-    }
+@Entity()
+export default class User extends BaseEntity {
+    @PrimaryColumn()
+    username!: string
 
-    get fullName() {
-        return `${this.firstName} ${this.lastName}`
-    }
+    @Column()
+    password!: string
+
+    @OneToOne((type) => Employee)
+    @JoinColumn()
+    employeeNumber!: number
 }

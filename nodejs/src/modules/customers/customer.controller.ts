@@ -12,54 +12,54 @@ export default class CustomerController {
         this.customerService = customerService ?? DIContainer.get(CustomerService)
     }
 
-    @Get("")
-    @Authenticated
-    getAll(req: Request, res: Response) {
-        res.status(200).send(this.customerService.getAllCustomers())
-    }
+    // @Get("")
+    // @Authenticated
+    // getAll(req: Request, res: Response) {
+    //     res.status(200).send(this.customerService.getAllCustomers())
+    // }
 
-    @Post("")
-    create(req: Request, res: Response) {
-        res.status(200).send(this.customerService.createCustomer())
-    }
+    // @Post("")
+    // create(req: Request, res: Response) {
+    //     res.status(200).send(this.customerService.createCustomer())
+    // }
 
-    @Put("")
-    modify(req: Request, res: Response) {
-        res.status(403).end("forbidden")
-    }
+    // @Put("")
+    // modify(req: Request, res: Response) {
+    //     res.status(403).end("forbidden")
+    // }
 
-    @Delete("")
-    delete(req: Request, res: Response) {
-        res.status(403).end("forbidden")
-    }
+    // @Delete("")
+    // delete(req: Request, res: Response) {
+    //     res.status(403).end("forbidden")
+    // }
 
     //
     // SINGLE RESOURCE ROUTES
     //
 
-    @Get("/:id")
-    getById(req: Request, res: Response) {
-        const foundEmployee = this.customerService.getCustomerById(parseInt(req.params["id"]))
+    // @Get("/:id")
+    // getById(req: Request, res: Response) {
+    //     const foundEmployee = this.customerService.getCustomerById(parseInt(req.params["id"]))
 
-        if (foundEmployee == undefined) {
-            return res.status(404).send("Not Found")
-        }
+    //     if (foundEmployee == undefined) {
+    //         return res.status(404).send("Not Found")
+    //     }
 
-        return res.status(200).send(foundEmployee)
-    }
+    //     return res.status(200).send(foundEmployee)
+    // }
 
-    @Put("/:id")
-    updateById(req: Request, res: Response) {
-        res.status(200).send("update emp by id")
-    }
+    // @Put("/:id")
+    // updateById(req: Request, res: Response) {
+    //     res.status(200).send("update emp by id")
+    // }
 
-    @Delete("/:id")
-    deleteById(req: Request, res: Response) {
-        res.send(this.customerService.deleteCustomerById(parseInt(req.params["id"])))
-    }
+    // @Delete("/:id")
+    // deleteById(req: Request, res: Response) {
+    //     res.send(this.customerService.deleteCustomerById(parseInt(req.params["id"])))
+    // }
 
-    @Post("/:id")
-    createById(req: Request, res: Response) {
-        res.status(403).end("forbidden")
-    }
+    // @Post("/:id")
+    // createById(req: Request, res: Response) {
+    //     res.status(403).end("forbidden")
+    // }
 }

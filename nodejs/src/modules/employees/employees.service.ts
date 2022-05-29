@@ -9,23 +9,23 @@ export default class EmployeesService {
         this.employeeStore = employeeStore ?? DIContainer.get(EmployeesStore)
     }
 
-    getAllEmployees(): Employee[] | undefined {
+    getAllEmployees() {
         return this.employeeStore.getAll()
     }
 
-    getEmployeeById(id: number): Employee | undefined {
+    getEmployeeById(id: number) {
         return this.employeeStore.getById(id)
     }
 
-    deleteEmployeeById(id: number): Employee | undefined {
+    deleteEmployeeById(id: number){
         return this.employeeStore.permanentRemoveById(id)
     }
 
-    createEmployee(): Employee {
+    createEmployee() {
         return this.employeeStore.create()
     }
 
-    updateEmployee(id: number, updatedEmployee: Employee): Employee | undefined {
+    updateEmployee(id: number, updatedEmployee: Employee){
         return this.employeeStore.updateById(id, updatedEmployee)
     }
 }
