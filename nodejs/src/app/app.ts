@@ -14,6 +14,9 @@ import Logger from "src/common/logger"
 import MockEmployeeStore from "src/modules/employees/stores/mock.employee.store"
 import { MySQLUserStore } from "src/modules/user/stores/mysql.user.store"
 import { MySQLCustomerStore } from "src/modules/customers/stores/mysql.customer.store"
+import { MySQLEmployeeStore } from "src/modules/employees/stores/mysql.user.store"
+import { MySQLProductStore } from "src/modules/product/stores/mysql.product.store"
+import MySQLOrderStore from "src/modules/order/stores/mysql.order.store"
 
 export type AppConstructor = {
     port: number | undefined
@@ -62,6 +65,9 @@ export default class App {
     initDependencies() {
         DIContainer.put("MySQLUserStore", new MySQLUserStore())
         DIContainer.put("MySQLCustomerStore", new MySQLCustomerStore())
+        DIContainer.put("MySQLCustomerStore", new MySQLEmployeeStore())
+        DIContainer.put("MySQLProductStore", new MySQLProductStore())
+        DIContainer.put("MySQLOrderStore", new MySQLOrderStore())
         // DIContainer.put("MockEmployeeStore", new MockEmployeeStore())
     }
 

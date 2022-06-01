@@ -5,8 +5,8 @@ import Employee from "src/modules/employees/employees.model"
 import { DataSource } from "typeorm"
 import { Customer, Office, Product, User } from "src/entities"
 import { Role } from "src/modules/user/user.model"
-import Order, { OrderDetail } from "src/entities/order.model"
-import { ProductLine } from "src/entities/product.model"
+import Order, { OrderDetail } from "src/modules/order/order.model"
+import { ProductLine } from "src/modules/product/product.model"
 
 const TypeOrmProvider = new DataSource({
     type: "mysql",

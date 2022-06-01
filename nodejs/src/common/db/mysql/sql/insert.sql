@@ -14,40 +14,36 @@ insert into `role`(`name`) values
 ('President'),
 ('Manager'),
 ('Leader'),
-('Staff'),
-(5),
-('VP Marketing'),
-('Sales Manager (APAC)'),
-('Sale Manager (EMEA)'),
-('Sales Manager (NA)'),
-('Sales Rep');
+('Staff');
 
 -- EMPLOYEES
 insert  into `employee`(`employeeNumber`,`lastName`,`firstName`,`extension`,`email`,`officeCode`,`reportsTo`,`roleId`) values 
 
 (1002,'Murphy','Diane','x5800','dmurphy@classicmodelcars.com','1',NULL,1),
-(1056,'Patterson','Mary','x4611','mpatterso@classicmodelcars.com','1',1002,5),
-(1076,'Firrelli','Jeff','x9273','jfirrelli@classicmodelcars.com','1',1002,6),
-(1088,'Patterson','William','x4871','wpatterson@classicmodelcars.com','6',1056,7),
-(1102,'Bondur','Gerard','x5408','gbondur@classicmodelcars.com','4',1056,8),
-(1143,'Bow','Anthony','x5428','abow@classicmodelcars.com','1',1056,9),
-(1165,'Jennings','Leslie','x3291','ljennings@classicmodelcars.com','1',1143, 10),
-(1166,'Thompson','Leslie','x4065','lthompson@classicmodelcars.com','1',1143, 10),
-(1188,'Firrelli','Julie','x2173','jfirrelli@classicmodelcars.com','2',1143, 10),
-(1216,'Patterson','Steve','x4334','spatterson@classicmodelcars.com','2',1143, 10),
-(1286,'Tseng','Foon Yue','x2248','ftseng@classicmodelcars.com','3',1143, 10),
-(1323,'Vanauf','George','x4102','gvanauf@classicmodelcars.com','3',1143, 10),
-(1337,'Bondur','Loui','x6493','lbondur@classicmodelcars.com','4',1102, 10),
-(1370,'Hernandez','Gerard','x2028','ghernande@classicmodelcars.com','4',1102, 10),
-(1401,'Castillo','Pamela','x2759','pcastillo@classicmodelcars.com','4',1102, 10),
-(1501,'Bott','Larry','x2311','lbott@classicmodelcars.com','7',1102, 10),
-(1504,'Jones','Barry','x102','bjones@classicmodelcars.com','7',1102, 10),
-(1611,'Fixter','Andy','x101','afixter@classicmodelcars.com','6',1088, 10),
-(1612,'Marsh','Peter','x102','pmarsh@classicmodelcars.com','6',1088, 10),
-(1619,'King','Tom','x103','tking@classicmodelcars.com','6',1088, 10),
-(1621,'Nishi','Mami','x101','mnishi@classicmodelcars.com','5',1056, 10),
-(1625,'Kato','Yoshimi','x102','ykato@classicmodelcars.com','5',1621, 10),
-(1702,'Gerard','Martin','x2312','mgerard@classicmodelcars.com','4',1102, 10);
+(1056,'Patterson','Mary','x4611','mpatterso@classicmodelcars.com','1',1002,3),
+(1076,'Firrelli','Jeff','x9273','jfirrelli@classicmodelcars.com','1',1002,3),
+(1088,'Patterson','William','x4871','wpatterson@classicmodelcars.com','6',1056,2),
+(1102,'Bondur','Gerard','x5408','gbondur@classicmodelcars.com','4',1056,2),
+(1143,'Bow','Anthony','x5428','abow@classicmodelcars.com','1',1056,2),
+(1165,'Jennings','Leslie','x3291','ljennings@classicmodelcars.com','1',1143,4),
+(1166,'Thompson','Leslie','x4065','lthompson@classicmodelcars.com','1',1143,4),
+(1188,'Firrelli','Julie','x2173','jfirrelli@classicmodelcars.com','2',1143,4),
+(1216,'Patterson','Steve','x4334','spatterson@classicmodelcars.com','2',1143,4),
+(1286,'Tseng','Foon Yue','x2248','ftseng@classicmodelcars.com','3',1143,4),
+(1323,'Vanauf','George','x4102','gvanauf@classicmodelcars.com','3',1143,4),
+(1337,'Bondur','Loui','x6493','lbondur@classicmodelcars.com','4',1102,4),
+(1370,'Hernandez','Gerard','x2028','ghernande@classicmodelcars.com','4',1102,4),
+(1401,'Castillo','Pamela','x2759','pcastillo@classicmodelcars.com','4',1102,4),
+(1501,'Bott','Larry','x2311','lbott@classicmodelcars.com','7',1102,4),
+(1504,'Jones','Barry','x102','bjones@classicmodelcars.com','7',1102,4),
+(1611,'Fixter','Andy','x101','afixter@classicmodelcars.com','6',1088,4),
+(1612,'Marsh','Peter','x102','pmarsh@classicmodelcars.com','6',1088,4),
+(1619,'King','Tom','x103','tking@classicmodelcars.com','6',1088,4),
+(1621,'Nishi','Mami','x101','mnishi@classicmodelcars.com','5',1056,3),
+(1625,'Kato','Yoshimi','x102','ykato@classicmodelcars.com','5',1621,4),
+(1702,'Gerard','Martin','x2312','mgerard@classicmodelcars.com','4',1102,4);
+
+
 
 -- PRODUCT LINE
 insert  into `product_line`(`productLine`,`textDescription`,`htmlDescription`,`image`) values 
