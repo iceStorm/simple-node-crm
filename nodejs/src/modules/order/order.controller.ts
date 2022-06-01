@@ -6,7 +6,7 @@ import { Authenticated } from "../user/middlewares/authenticated.middleware"
 import { DIContainer } from "src/core/injector"
 import OrderService from "./order.service"
 
-@Controller("/customers")
+@Controller("/orders")
 export default class OrderController {
     constructor(public readonly orderService: OrderService) {
         this.orderService = orderService ?? DIContainer.get(OrderService)

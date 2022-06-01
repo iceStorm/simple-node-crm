@@ -14,7 +14,7 @@ import Logger from "src/common/logger"
 import MockEmployeeStore from "src/modules/employees/stores/mock.employee.store"
 import { MySQLUserStore } from "src/modules/user/stores/mysql.user.store"
 import { MySQLCustomerStore } from "src/modules/customers/stores/mysql.customer.store"
-import { MySQLEmployeeStore } from "src/modules/employees/stores/mysql.user.store"
+import { MySQLEmployeeStore } from "src/modules/employees/stores/mysql.employee.store"
 import { MySQLProductStore } from "src/modules/product/stores/mysql.product.store"
 import MySQLOrderStore from "src/modules/order/stores/mysql.order.store"
 

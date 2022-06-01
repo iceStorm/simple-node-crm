@@ -31,6 +31,6 @@ export default class Office extends BaseEntity {
     territory!: string
 
     // not denoted to be a column, just use in code level
-    @OneToMany((type) => Employee, (e) => e.office)
-    employees!: Employee[]
+    // @OneToMany((type) => Employee, (e) => e.officeCode)
+    // employees!: Employee[]
 }

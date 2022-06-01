@@ -4,25 +4,21 @@ import EmployeeStore from "../employees.store"
 
 @Injectable()
 export class MySQLEmployeeStore extends EmployeeStore {
-    async authenticate(Employeename: string, password: string) {
+    getAll(): Promise<Employee[]> {
+        return Employee.find()
+    }
+
+    getById(id: number): Promise<Employee | null> {
         return Employee.findOneBy({
-            employeeNumber: 1,
+            employeeNumber: id,
         })
     }
 
-    getAll(): Promise<Employee[]> {
+    softRemoveById(id: number): Promise<Employee | null> {
         throw new Error("Method not implemented.")
     }
 
-    getById(id: number): Promise<Employee> {
-        throw new Error("Method not implemented.")
-    }
-
-    softRemoveById(id: number): Promise<Employee | undefined> {
-        throw new Error("Method not implemented.")
-    }
-
-    permanentRemoveById(id: number): Promise<Employee | undefined> {
+    permanentRemoveById(id: number): Promise<Employee | null> {
         throw new Error("Method not implemented.")
     }
 
@@ -30,7 +26,7 @@ export class MySQLEmployeeStore extends EmployeeStore {
         throw new Error("Method not implemented.")
     }
 
-    updateById(id: number, updatedData: Employee): Promise<Employee | undefined> {
+    updateById(id: number, updatedData: Employee): Promise<Employee | null> {
         throw new Error("Method not implemented.")
     }
 }

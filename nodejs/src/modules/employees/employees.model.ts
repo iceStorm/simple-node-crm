@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer"
 import e from "express"
 import { Office } from "src/entities"
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
@@ -9,6 +10,7 @@ export default class Employee extends BaseEntity {
     employeeNumber!: number
 
     @OneToOne((type) => User, (u) => u.employee)
+    @JoinColumn()
     user!: User
 
     @Column({ length: 50 })
@@ -23,18 +25,24 @@ export default class Employee extends BaseEntity {
     @Column({ length: 100 })
     email!: string
 
-    @ManyToOne((type) => Office, { nullable: false })
-    @JoinColumn({ name: "officeCode" })
+    // @Column()
+    // officeCode!: string
+
+    @ManyToOne((type) => Office, (o) => o.officeCode, { nullable: false, eager: true })
+    @JoinColumn({ name: "officeCode", referencedColumnName: "officeCode" })
     office!: Office
 
-    @ManyToOne((type) => Role, (r) => r.employees, { nullable: false })
+    // @Column()
+    // roleId!: number
+
+    @ManyToOne((type) => Role, (r) => r.id, { nullable: false, eager: true })
     @JoinColumn({ name: "roleId" })
     role!: Role
 
     // slaves
     @ManyToOne((type) => Employee, (e) => e.responsibleFor)
     @JoinColumn({ name: "reportsTo" })
-    reportsTo!: Employee
+    reportsTo?: Employee
 
     // master
     @OneToMany((type) => Employee, (e) => e.reportsTo)
@@ -43,4 +51,13 @@ export default class Employee extends BaseEntity {
     get fullName() {
         return `${this.firstName} ${this.lastName}`
     }
+}
+
+switch (5 > 6) {
+    case true:
+        const a = 5
+        break
+
+    default:
+        break
 }

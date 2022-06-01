@@ -1,4 +1,5 @@
 import "reflect-metadata"
+import 'es6-shim';
 
 // DBs
 import { connectMongoDB } from "./common/db/mongodb"

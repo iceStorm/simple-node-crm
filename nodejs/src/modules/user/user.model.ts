@@ -36,6 +36,6 @@ export class Role extends BaseEntity {
     })
     name!: string
 
-    @OneToMany((type) => Employee, (e) => e.role)
-    employees!: Employee[]
+    // @OneToMany((type) => Employee, (e) => e.role)
+    // employees!: Employee[]
 }

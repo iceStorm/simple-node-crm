@@ -2,37 +2,37 @@ import BaseModel from "./base.model"
 
 export default abstract class BaseStore<T> {
     /**
-     * Getting all Employees from DB.
+     * Getting all Objects from DB.
      */
     abstract getAll(): Promise<T[]>
 
     /**
-     * Getting a Employee object from an id.
-     * @param id the id of Employee want to get full object
+     * Getting a Object object from an id.
+     * @param id the id of Object want to get full object
      */
-    abstract getById(id: number): Promise<T>
+    abstract getById(id: number): Promise<T | null>
 
     /**
-     * "Soft" removing a Employee from id.
-     * @param id the id of Employee want to soft remove
+     * "Soft" removing a Object from id.
+     * @param id the id of Object want to soft remove
      */
-    abstract softRemoveById(id: number): Promise<T | undefined>
+    abstract softRemoveById(id: number): Promise<T | null>
 
     /**
-     * "Permanently" removing a Employee from id.
-     * @param id the id of Employee want to be completely removed
+     * "Permanently" removing a Object from id.
+     * @param id the id of Object want to be completely removed
      */
-    abstract permanentRemoveById(id: number): Promise<T | undefined>
+    abstract permanentRemoveById(id: number): Promise<T | null>
 
     /**
-     * Creating a new Employee
+     * Creating a new Object
      */
     abstract create(): Promise<T>
 
     /**
-     * Updating a Employee object from an id.
-     * @param id the id of Employee want to be updated
-     * @param updatedData the updated Employee info
+     * Updating a Object object from an id.
+     * @param id the id of Object want to be updated
+     * @param updatedData the updated Object info
      */
-    abstract updateById(id: number, updatedData: T): Promise<T | undefined>
+    abstract updateById(id: number, updatedData: T): Promise<T | null>
 }

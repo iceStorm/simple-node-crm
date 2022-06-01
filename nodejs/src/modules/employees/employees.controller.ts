@@ -12,54 +12,53 @@ export default class EmployeesController {
         this.employeesService = employeesService ?? DIContainer.get(EmployeesService)
     }
 
-    // @Get("")
+    @Get("")
     // @Authenticated
-    // getAll(req: Request, res: Response) {
-    //     res.status(200).send(this.employeesService.getAllEmployees())
-    // }
+    async getAll(req: Request, res: Response) {
+        const allEmployees = await this.employeesService.getAllEmployees()
+        console.log(allEmployees)
+        // console.log(allEmployees[0].role.name)
 
-    // @Post("")
-    // create(req: Request, res: Response) {
-    //     res.status(200).send(this.employeesService.createEmployee())
-    // }
+        res.status(200).send(allEmployees)
+    }
 
-    // @Put("")
-    // modify(req: Request, res: Response) {
-    //     res.status(403).end("forbidden")
-    // }
+    @Post("")
+    create(req: Request, res: Response) {
+        res.status(200).send(this.employeesService.createEmployee())
+    }
 
-    // @Delete("")
-    // delete(req: Request, res: Response) {
-    //     res.status(403).end("forbidden")
-    // }
+    @Put("")
+    modify(req: Request, res: Response) {
+        res.status(403).end("forbidden")
+    }
 
-    // //
-    // // SINGLE RESOURCE ROUTES
-    // //
+    @Delete("")
+    delete(req: Request, res: Response) {
+        res.status(403).end("forbidden")
+    }
 
-    // @Get("/:id")
-    // getById(req: Request, res: Response) {
-    //     const foundEmployee = this.employeesService.getEmployeeById(parseInt(req.params["id"]))
+    //
+    // SINGLE RESOURCE ROUTES
+    //
 
-    //     if (foundEmployee == undefined) {
-    //         return res.status(404).send("Not Found")
-    //     }
+    @Get("/:id")
+    async getById(req: Request, res: Response) {
+        const foundEmployee = await this.employeesService.getEmployeeById(parseInt(req.params["id"]))
+        return res.status(200).send(foundEmployee ?? "Not found")
+    }
 
-    //     return res.status(200).send(foundEmployee)
-    // }
+    @Put("/:id")
+    updateById(req: Request, res: Response) {
+        res.status(200).send("update emp by id")
+    }
 
-    // @Put("/:id")
-    // updateById(req: Request, res: Response) {
-    //     res.status(200).send("update emp by id")
-    // }
+    @Delete("/:id")
+    deleteById(req: Request, res: Response) {
+        res.send(this.employeesService.deleteEmployeeById(parseInt(req.params["id"])))
+    }
 
-    // @Delete("/:id")
-    // deleteById(req: Request, res: Response) {
-    //     res.send(this.employeesService.deleteEmployeeById(parseInt(req.params["id"])))
-    // }
-
-    // @Post("/:id")
-    // createById(req: Request, res: Response) {
-    //     res.status(403).end("forbidden")
-    // }
+    @Post("/:id")
+    createById(req: Request, res: Response) {
+        res.status(403).end("forbidden")
+    }
 }

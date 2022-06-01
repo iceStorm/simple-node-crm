@@ -19,11 +19,11 @@ export class MySQLUserStore extends UserStore {
         throw new Error("Method not implemented.")
     }
 
-    softRemoveById(id: number): Promise<User | undefined> {
+    softRemoveById(id: number): Promise<User | null> {
         throw new Error("Method not implemented.")
     }
 
-    permanentRemoveById(id: number): Promise<User | undefined> {
+    permanentRemoveById(id: number): Promise<User | null> {
         throw new Error("Method not implemented.")
     }
 
@@ -31,7 +31,7 @@ export class MySQLUserStore extends UserStore {
         throw new Error("Method not implemented.")
     }
 
-    updateById(id: number, updatedData: User): Promise<User | undefined> {
+    updateById(id: number, updatedData: User): Promise<User | null> {
         throw new Error("Method not implemented.")
     }
 }

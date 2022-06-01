@@ -10,16 +10,16 @@ export class MySQLProductStore extends ProductStore {
     getById(id: number): Promise<Product> {
         throw new Error("Method not implemented.")
     }
-    softRemoveById(id: number): Promise<Product | undefined> {
+    softRemoveById(id: number): Promise<Product | null> {
         throw new Error("Method not implemented.")
     }
-    permanentRemoveById(id: number): Promise<Product | undefined> {
+    permanentRemoveById(id: number): Promise<Product | null> {
         throw new Error("Method not implemented.")
     }
     create(): Promise<Product> {
         throw new Error("Method not implemented.")
     }
-    updateById(id: number, updatedData: Product): Promise<Product | undefined> {
+    updateById(id: number, updatedData: Product): Promise<Product | null> {
         throw new Error("Method not implemented.")
     }
 }

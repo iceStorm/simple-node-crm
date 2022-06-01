@@ -6,7 +6,7 @@ import { Authenticated } from "../user/middlewares/authenticated.middleware"
 import { DIContainer } from "src/core/injector"
 import ProductService from "./product.service"
 
-@Controller("/customers")
+@Controller("/products")
 export default class ProductController {
     constructor(public readonly productService: ProductService) {
         this.productService = productService ?? DIContainer.get(ProductService)
