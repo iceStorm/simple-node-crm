@@ -1,29 +1,46 @@
+import e from "express"
 import { Office } from "src/entities"
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
-import { Role } from "../user/user.model"
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import User, { Role } from "../user/user.model"
 
 @Entity()
 export default class Employee extends BaseEntity {
     @PrimaryGeneratedColumn()
     employeeNumber!: number
 
-    @Column()
+    @OneToOne((type) => User, (u) => u.employee)
+    user!: User
+
+    @Column({ length: 50 })
     lastName!: string
 
-    @Column()
+    @Column({ length: 50 })
     firstName!: string
 
-    @Column()
+    @Column({ length: 10 })
     extension!: string
 
-    @Column()
+    @Column({ length: 100 })
     email!: string
 
     @ManyToOne((type) => Office, { nullable: false })
     @JoinColumn({ name: "officeCode" })
-    officeCode!: string
+    office!: Office
 
-    @ManyToOne((type) => Role, { nullable: false })
-    @JoinColumn({ name: "jobTitle" })
-    jobTitle!: string
+    @ManyToOne((type) => Role, (r) => r.employees, { nullable: false })
+    @JoinColumn({ name: "roleId" })
+    role!: Role
+
+    // slaves
+    @ManyToOne((type) => Employee, (e) => e.responsibleFor)
+    @JoinColumn({ name: "reportsTo" })
+    reportsTo!: Employee
+
+    // master
+    @OneToMany((type) => Employee, (e) => e.reportsTo)
+    responsibleFor?: Employee[]
+
+    get fullName() {
+        return `${this.firstName} ${this.lastName}`
+    }
 }

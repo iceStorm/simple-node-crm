@@ -3,6 +3,7 @@ import {
     Column,
     Entity,
     JoinColumn,
+    OneToMany,
     OneToOne,
     PrimaryColumn,
     PrimaryGeneratedColumn,
@@ -11,6 +12,7 @@ import {
 import Employee from "../employees/employees.model"
 
 @Entity()
+@Unique(["employee"])
 export default class User extends BaseEntity {
     @PrimaryColumn()
     username!: string
@@ -18,10 +20,9 @@ export default class User extends BaseEntity {
     @Column()
     password!: string
 
-    @Column({ unique: true })
-    @OneToOne((type) => Employee, { nullable: false })
+    @OneToOne((type) => Employee, (e) => e.user, { nullable: false })
     @JoinColumn({ name: "employeeNumber" })
-    employeeNumber!: number
+    employee!: Employee
 }
 
 @Entity()
@@ -34,4 +35,7 @@ export class Role extends BaseEntity {
         length: 50,
     })
     name!: string
+
+    @OneToMany((type) => Employee, (e) => e.role)
+    employees!: Employee[]
 }

@@ -1,45 +1,69 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
-import { Product } from "."
+import {
+    BaseEntity,
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToMany,
+    ManyToOne,
+    OneToMany,
+    OneToOne,
+    PrimaryColumn,
+    PrimaryGeneratedColumn,
+} from "typeorm"
+import { Customer, Product } from "."
 
 @Entity()
 export default class Order extends BaseEntity {
     @PrimaryGeneratedColumn("increment")
     orderNumber!: number
 
-    @Column()
+    // @OneToMany((type) => OrderDetail)
+    // orderDetails!: OrderDetail[]
+
+    @Column({ type: "date" })
     orderDate!: Date
 
-    @Column()
+    @Column({ type: "date" })
     requiredDate!: Date
 
-    @Column()
-    shippedsDate!: Date
+    @Column({ type: "date", nullable: true })
+    shippedDate!: Date
 
-    @Column()
+    @Column({ length: 15 })
     status!: string
 
-    @Column()
+    @Column({ type: "text", nullable: true })
     comments!: string
+
+    @ManyToOne((type) => Customer, { nullable: false })
+    @JoinColumn({ name: "customerNumber" })
+    customerNumber!: number
 }
 
 @Entity()
 export class OrderDetail extends BaseEntity {
-    @PrimaryColumn()
-    @ManyToOne((type) => Order)
-    @JoinColumn({ name: "orderNumber"})
+    @PrimaryColumn({ primary: true })
+    @ManyToOne((type) => Order, o => o.orderNumber)
+    @JoinColumn({ name: "orderNumber" })
     orderNumber!: number
 
-    @PrimaryColumn()
-    @ManyToMany((type) => Product)
-    @JoinColumn({ name: "productCode"})
-    productCode!: number
+    // @ManyToOne((type) => Order, (o) => o.orderDetails)
+    // order!: Order
+
+    @PrimaryColumn({ primary: true, length: 15 })
+    @ManyToOne((type) => Product)
+    @JoinColumn({ name: "productCode" })
+    productCode!: string
+
+    // @ManyToOne((type) => Order, (o) => o.orderDetails)
+    // product!: Product
 
     @Column()
     quantityOrdered!: number
 
-    @Column()
+    @Column({ type: "decimal", precision: 10, scale: 2 })
     priceEach!: number
 
-    @Column()
+    @Column({ type: "smallint", precision: 6 })
     orderLineNumber!: number
 }
