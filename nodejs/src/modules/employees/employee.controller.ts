@@ -14,11 +14,11 @@ export default class EmployeeController extends BaseController<Employee, Employe
         super(employeeService, employeeStore)
     }
 
-    @Post("")
-    // @Authenticated
-    create(req: Request, res: Response, next: NextFunction): void {
-        // return super.create(req, res, next)
-        // this.store.
-        next("abc")
-    }
+    // @Post("")
+    // // @Authenticated
+    // create(req: Request, res: Response, next: NextFunction): void {
+    //     // return super.create(req, res, next)
+    //     // this.store.
+    //     next("abc")
+    // }
 }
