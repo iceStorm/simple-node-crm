@@ -20,7 +20,7 @@ export interface InjectableOptions {
 export default function Injectable(options?: InjectableOptions) {
     return function (target: any) {
         // console.log("DIContainer putting:", target)
-        DIContainer.put(target.name, new target())
+        DIContainer.put(target.name, new target(...DIContainer.findDependencies(target)))
     }
 }
 

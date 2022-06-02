@@ -33,4 +33,15 @@ export const DIContainer = new (class {
 
         return undefined
     }
+
+    findDependencies(controllerClass: any): any[] {
+        const dependencies = []
+        const classParameters = Reflect.getMetadata("design:paramtypes", controllerClass) || []
+
+        for (const param of classParameters) {
+            dependencies.push(this.get(param))
+        }
+
+        return dependencies
+    }
 })()

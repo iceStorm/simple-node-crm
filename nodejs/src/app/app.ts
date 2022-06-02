@@ -152,7 +152,7 @@ export default class App {
             const router = express.Router()
 
             // init and inject dependencies
-            const controllerInstance = new controller(...this.getControllerDependencies(controller))
+            const controllerInstance = new controller(...DIContainer.findDependencies(controller))
 
             for (const handler of routerHandlers) {
                 // use the actual handler method at the end (middlewares need to be run first)
@@ -194,23 +194,6 @@ export default class App {
                 }
             })
         )
-    }
-
-    getControllerDependencies(controllerClass: any): any[] {
-        // console.log(`\n${controllerClass.name} in initializing, it has the following dependencies...`)
-
-        const dependencies = []
-        // dependencies.push(5)
-
-        const classParameters = Reflect.getMetadata("design:paramtypes", controllerClass)
-        // console.log(classParameters)
-        // console.log(`The DIContainer currently contains:`, DIContainer)
-
-        for (const param of classParameters) {
-            dependencies.push(DIContainer.get(param))
-        }
-
-        return dependencies
     }
 
     checkDuplicatedRoutes(routes: RouteMapItem[]) {

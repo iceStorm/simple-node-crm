@@ -6,9 +6,8 @@ import BaseService from "src/common/base.service"
 
 @Injectable()
 export default class EmployeeService extends BaseService<Employee> {
-    constructor(public employeeStore: EmployeesStore) {
+    constructor(private employeeStore: EmployeesStore) {
         super()
-        this.employeeStore = employeeStore ?? DIContainer.get(EmployeesStore)
     }
 
     getAllEmployees() {
