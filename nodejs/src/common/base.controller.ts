@@ -3,6 +3,7 @@ import { number } from "joi"
 
 import { Delete, Get, Patch, Post, Put } from "src/core/decorators/http.decorator"
 import { DIContainer } from "src/core/injector"
+import EmployeeNotFoundError from "src/modules/employees/errors/EmployeeNotFoundError"
 import { Authenticated } from "src/modules/user/middlewares/authenticated.middleware"
 import { BaseEntity } from "typeorm"
 import BaseService from "./base.service"
@@ -20,8 +21,13 @@ export default abstract class BaseController<T extends BaseEntity, S extends Bas
     }
 
     @Post("")
-    create(req: Request, res: Response, next: NextFunction) {
-        res.status(200).send("create")
+    async create(req: Request, res: Response, next: NextFunction) {
+        try {
+            const createdResult = await this.store.create(req.body)
+            res.status(200).end(createdResult)
+        } catch (error) {
+            res.status(500).send((error as any).message)
+        }
     }
 
     //
@@ -50,9 +56,8 @@ export default abstract class BaseController<T extends BaseEntity, S extends Bas
             const result = await this.store.permanentRemoveById(parseInt(req.params["id"]))
             res.status(200).send(result)
         } catch (error) {
-            console.log(error);
-            
-            res.status(409).send(error)
+            console.log(error)
+            res.status(409).send((error as any).message)
         }
     }
 }

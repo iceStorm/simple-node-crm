@@ -29,8 +29,9 @@ export class MySQLEmployeeStore extends EmployeeStore {
         return true
     }
 
-    create(employee: Employee): Promise<Employee> {
-        return Employee.create(employee).save()
+    async create(employee: Employee): Promise<Employee> {
+        const createResult = await Employee.create(employee).save()
+        return createResult
     }
 
     updateById(id: number, updatedData: Employee): Promise<Employee | null> {
