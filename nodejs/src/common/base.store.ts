@@ -16,18 +16,18 @@ export default abstract class BaseStore<T> {
      * "Soft" removing a Object from id.
      * @param id the id of Object want to soft remove
      */
-    abstract softRemoveById(id: number): Promise<T | null>
+    abstract softRemoveById(id: number): Promise<boolean>
 
     /**
      * "Permanently" removing a Object from id.
      * @param id the id of Object want to be completely removed
      */
-    abstract permanentRemoveById(id: number): Promise<T | null>
+    abstract permanentRemoveById(id: number): Promise<boolean>
 
     /**
      * Creating a new Object
      */
-    abstract create(): Promise<T>
+    abstract create(input: T): Promise<T>
 
     /**
      * Updating a Object object from an id.

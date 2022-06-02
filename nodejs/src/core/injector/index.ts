@@ -21,29 +21,16 @@ export const DIContainer = new (class {
      * @param target The class want to be resolved
      */
     get(token: any): typeof token | undefined {
-        // console.log("\nDIContainer resolving token:", token, this.providers)
-        // throw new Error("DIContainer error")
-        // console.log("token:", token)
-
         if (token == "undefined" || token == undefined) {
-            // throw new Error("Token can't be undefined'")
             return undefined
         }
 
         for (const [key, instance] of this.providers) {
-            // console.log(instance, token, token == undefined, typeof token)
-
-            try {
-                if (token != undefined && instance instanceof token) {
-                    // console.log("resolved token:", instance)
-                    return instance
-                }
-            } catch (error) {
-                console.error(`Error occurred while resolving token ${token}${typeof token}: ${error}`)
+            if (instance instanceof token) {
+                return instance
             }
         }
 
-        // console.log("not found token:", token)
         return undefined
     }
 })()

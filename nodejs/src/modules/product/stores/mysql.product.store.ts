@@ -10,10 +10,10 @@ export class MySQLProductStore extends ProductStore {
     getById(id: number): Promise<Product> {
         throw new Error("Method not implemented.")
     }
-    softRemoveById(id: number): Promise<Product | null> {
+    softRemoveById(id: number): Promise<boolean> {
         throw new Error("Method not implemented.")
     }
-    permanentRemoveById(id: number): Promise<Product | null> {
+    permanentRemoveById(id: number): Promise<boolean> {
         throw new Error("Method not implemented.")
     }
     create(): Promise<Product> {

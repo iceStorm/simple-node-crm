@@ -23,8 +23,8 @@ export default class EmployeeService extends BaseService<Employee> {
         return this.employeeStore.permanentRemoveById(id)
     }
 
-    createEmployee() {
-        return this.employeeStore.create()
+    createEmployee(employee: Employee) {
+        return this.employeeStore.create(employee)
     }
 
     updateEmployee(id: number, updatedEmployee: Employee) {

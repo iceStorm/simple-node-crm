@@ -7,39 +7,42 @@ export default class Customer extends BaseEntity {
     @PrimaryGeneratedColumn("increment")
     customerNumber!: number
 
-    @Column({ length: 50 })
+    @Column("varchar", { length: 50 })
     customerName!: string
 
-    @Column({ length: 50 })
+    @Column("varchar", { length: 50 })
     contactLastName!: string
 
-    @Column({ length: 50 })
+    @Column("varchar", { length: 50 })
     contactFirstName!: string
 
-    @Column({ length: 50 })
+    @Column("varchar", { length: 50 })
     phone!: string
 
-    @Column({ length: 50 })
+    @Column("varchar", { length: 50 })
     addressLine1!: string
 
-    @Column({ length: 50, nullable: true })
+    @Column("varchar", { length: 50, nullable: true })
     addressLine2!: string
 
-    @Column({ length: 50 })
+    @Column("varchar", { length: 50 })
     city!: string
 
-    @Column({ length: 50, nullable: true })
+    @Column("varchar", { length: 50, nullable: true })
     state!: string
 
-    @Column({ length: 50, nullable: true })
+    @Column("varchar", { length: 50, nullable: true })
     postalCode!: string
 
-    @Column({ length: 50 })
+    @Column("varchar", { length: 50 })
     country!: string
 
-    @ManyToOne((type) => Employee, { nullable: true, eager: true})
+    @ManyToOne((type) => Employee, { nullable: true, eager: true })
     @JoinColumn({ name: "salesRepEmployeeNumber" })
-    salesRepEmployeeNumber!: Employee
+    salesRepEmployee!: Employee
+
+    @Column({ nullable: true })
+    salesRepEmployeeNumber!: number
 
     @Column({ nullable: true, type: "decimal", precision: 10, scale: 2 })
     creditLimit!: number

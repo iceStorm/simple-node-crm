@@ -3,31 +3,31 @@ import { Employee } from "../../entities"
 
 @Entity()
 export default class Office extends BaseEntity {
-    @PrimaryColumn({ length: 10 })
+    @PrimaryColumn("varchar", { length: 10 })
     officeCode!: string
 
-    @Column({ length: 50 })
+    @Column("varchar", { length: 50 })
     city!: string
 
-    @Column({ length: 50 })
+    @Column("varchar", { length: 50 })
     phone!: string
 
-    @Column({ length: 50 })
+    @Column("varchar", { length: 50 })
     addressLine1!: string
 
-    @Column({ length: 50, nullable: true })
+    @Column("varchar", { length: 50, nullable: true })
     addressLine2?: string
 
-    @Column({ length: 50, nullable: true })
+    @Column("varchar", { length: 50, nullable: true })
     state?: string
 
-    @Column({ length: 50 })
+    @Column("varchar", { length: 50 })
     country!: string
 
-    @Column({ length: 15 })
+    @Column("varchar", { length: 15 })
     postalCode!: string
 
-    @Column({ length: 10 })
+    @Column("varchar", { length: 10 })
     territory!: string
 
     // not denoted to be a column, just use in code level

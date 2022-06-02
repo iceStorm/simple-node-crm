@@ -30,20 +30,20 @@ export class ProductLine extends BaseEntity {
 
 @Entity()
 export default class Product extends BaseEntity {
-    @PrimaryColumn({ length: 15 })
+    @PrimaryColumn("varchar", { length: 15 })
     productCode!: string
 
-    @Column({ length: 70 })
+    @Column("varchar", { length: 70 })
     productName!: string
 
     @ManyToOne((type) => ProductLine)
     @JoinColumn({ name: "productLine" })
     productLine!: ProductLine
 
-    @Column({ length: 10 })
+    @Column("varchar", { length: 10 })
     productScale!: string
 
-    @Column({ length: 50 })
+    @Column("varchar", { length: 50 })
     productVendor!: string
 
     @Column({ type: "text" })

@@ -10,10 +10,10 @@ export default class MySQLOrderStore extends OrderStore {
     getById(id: number): Promise<Order> {
         throw new Error("Method not implemented.")
     }
-    softRemoveById(id: number): Promise<Order | null> {
+    softRemoveById(id: number): Promise<boolean> {
         throw new Error("Method not implemented.")
     }
-    permanentRemoveById(id: number): Promise<Order | null> {
+    permanentRemoveById(id: number): Promise<boolean> {
         throw new Error("Method not implemented.")
     }
     create(): Promise<Order> {

@@ -28,11 +28,11 @@ export class MySQLUserStore extends UserStore {
         throw new Error("Method not implemented.")
     }
 
-    softRemoveById(id: number): Promise<User | null> {
+    softRemoveById(id: number): Promise<boolean> {
         throw new Error("Method not implemented.")
     }
 
-    permanentRemoveById(id: number): Promise<User | null> {
+    permanentRemoveById(id: number): Promise<boolean> {
         throw new Error("Method not implemented.")
     }
 

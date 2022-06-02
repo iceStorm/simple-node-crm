@@ -7,18 +7,25 @@ export class MySQLCustomerStore extends CustomerStore {
     getAll(): Promise<Customer[]> {
         return Customer.find()
     }
-    getById(id: number): Promise<Customer> {
+
+    getById(id: number): Promise<Customer | null> {
+        return Customer.findOneBy({
+            customerNumber: id,
+        })
+    }
+
+    softRemoveById(id: number): Promise<boolean> {
         throw new Error("Method not implemented.")
     }
-    softRemoveById(id: number): Promise<Customer | null> {
+
+    permanentRemoveById(id: number): Promise<boolean> {
         throw new Error("Method not implemented.")
     }
-    permanentRemoveById(id: number): Promise<Customer | null> {
-        throw new Error("Method not implemented.")
-    }
+
     create(): Promise<Customer> {
         throw new Error("Method not implemented.")
     }
+
     updateById(id: number, updatedData: Customer): Promise<Customer | null> {
         throw new Error("Method not implemented.")
     }
