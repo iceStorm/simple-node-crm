@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs"
 
-import EmployeesService from "../employees/employees.service"
+import EmployeeService from "../employees/employee.service"
 import { Injectable } from "src/core/decorators"
 import { JWTService } from "src/common/services/jwt.service"
 import { DIContainer } from "src/core/injector"

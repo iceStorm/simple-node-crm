@@ -5,18 +5,20 @@ import { Get, Post, Put, Delete } from "src/core/decorators/http.decorator"
 import { Authenticated } from "../user/middlewares/authenticated.middleware"
 import { DIContainer } from "src/core/injector"
 import CustomerService from "./customer.service"
+import BaseController from "src/common/base.controller"
+import Customer from "./customer.model"
+import CustomerStore from "./customer.store"
 
 @Controller("/customers")
-export default class CustomerController {
-    constructor(public readonly customerService: CustomerService) {
-        this.customerService = customerService ?? DIContainer.get(CustomerService)
+export default class CustomerController extends BaseController<Customer, CustomerService, CustomerStore> {
+    constructor(private customerService: CustomerService, private customerStore: CustomerStore) {
+        super(customerService, customerStore)
     }
 
-    // @Get("")
-    // @Authenticated
-    // getAll(req: Request, res: Response) {
-    //     res.status(200).send(this.customerService.getAllCustomers())
-    // }
+    @Get("")
+    async getAll(req: Request, res: Response) {
+        res.status(200).send(await this.customerStore.getAll())
+    }
 
     // @Post("")
     // create(req: Request, res: Response) {

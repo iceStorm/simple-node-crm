@@ -1,6 +1,6 @@
 import { Injectable } from "src/core/decorators"
-import Employee from "../employees.model"
-import EmployeeStore from "../employees.store"
+import Employee from "../employee.model"
+import EmployeeStore from "../employee.store"
 
 @Injectable()
 export class MySQLEmployeeStore extends EmployeeStore {

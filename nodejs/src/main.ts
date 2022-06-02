@@ -9,7 +9,7 @@ import App from "src/app/app"
 import AppModule from "./app/app.module"
 import { TypeOrmProvider } from "./common/db/mysql"
 
-const app = new App({
+export const app = new App({
     port: (process.env.PORT || 7502) as number,
     rootModule: AppModule,
 })

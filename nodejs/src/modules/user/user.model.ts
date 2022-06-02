@@ -9,7 +9,7 @@ import {
     PrimaryGeneratedColumn,
     Unique,
 } from "typeorm"
-import Employee from "../employees/employees.model"
+import Employee from "../employees/employee.model"
 
 @Entity()
 @Unique(["employee"])

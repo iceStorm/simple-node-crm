@@ -15,8 +15,7 @@ export const Authenticated = function (target: Object, propertyKey: string, desc
         originalMethodName: propertyKey,
         handlerMethod: async function (req: Request, res: Response, next: NextFunction) {
             console.log("Authenticated this:", this)
-            console.log(next);
-            
+            // console.log(next)
 
             try {
                 let bearer = req.headers.authorization?.split("Bearer ")
@@ -34,7 +33,7 @@ export const Authenticated = function (target: Object, propertyKey: string, desc
 
                 // next()
             } catch (error: any) {
-                console.log(error);
+                console.log(error)
                 res.status(401).send(error)
             }
 

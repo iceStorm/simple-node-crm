@@ -12,7 +12,16 @@ export class MySQLUserStore extends UserStore {
     }
 
     getAll(): Promise<User[]> {
-        throw new Error("Method not implemented.")
+        return User.find()
+    }
+
+    /**
+     * Getting a User by username
+     * @param username username to find User by
+     * @returns Promise User|null
+     */
+    getByUsername(username: string): Promise<User | null> {
+        return User.findOneBy({ username: username })
     }
 
     getById(id: number): Promise<User> {

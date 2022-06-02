@@ -1,12 +1,11 @@
 import { Injectable } from "src/core/decorators"
-import Employee from "src/modules/employees/employees.model"
 import Customer from "../customer.model"
 import CustomerStore from "../customer.store"
 
 @Injectable()
 export class MySQLCustomerStore extends CustomerStore {
     getAll(): Promise<Customer[]> {
-        throw new Error("Method not implemented.")
+        return Customer.find()
     }
     getById(id: number): Promise<Customer> {
         throw new Error("Method not implemented.")
@@ -23,5 +22,4 @@ export class MySQLCustomerStore extends CustomerStore {
     updateById(id: number, updatedData: Customer): Promise<Customer | null> {
         throw new Error("Method not implemented.")
     }
-    
 }

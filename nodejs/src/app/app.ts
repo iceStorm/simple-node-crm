@@ -11,12 +11,12 @@ import DECORATOR_KEYS from "src/core/decorators/constants"
 import { AppRoute, HTTPMethod } from "src/core/decorators/http.decorator"
 import { DIContainer } from "src/core/injector"
 import Logger from "src/common/logger"
-import MockEmployeeStore from "src/modules/employees/stores/mock.employee.store"
 import { MySQLUserStore } from "src/modules/user/stores/mysql.user.store"
 import { MySQLCustomerStore } from "src/modules/customers/stores/mysql.customer.store"
 import { MySQLEmployeeStore } from "src/modules/employees/stores/mysql.employee.store"
 import { MySQLProductStore } from "src/modules/product/stores/mysql.product.store"
 import MySQLOrderStore from "src/modules/order/stores/mysql.order.store"
+import BaseController from "src/common/base.controller"
 
 export type AppConstructor = {
     port: number | undefined
@@ -65,7 +65,7 @@ export default class App {
     initDependencies() {
         DIContainer.put("MySQLUserStore", new MySQLUserStore())
         DIContainer.put("MySQLCustomerStore", new MySQLCustomerStore())
-        DIContainer.put("MySQLCustomerStore", new MySQLEmployeeStore())
+        DIContainer.put("MySQLEmployeeStore", new MySQLEmployeeStore())
         DIContainer.put("MySQLProductStore", new MySQLProductStore())
         DIContainer.put("MySQLOrderStore", new MySQLOrderStore())
         // DIContainer.put("MockEmployeeStore", new MockEmployeeStore())
@@ -150,7 +150,9 @@ export default class App {
 
             // each controller has its own router on the root path
             const router = express.Router()
-            const controllerInstance = new controller()
+
+            // init and inject dependencies
+            const controllerInstance = new controller(...this.getControllerDependencies(controller))
 
             for (const handler of routerHandlers) {
                 // use the actual handler method at the end (middlewares need to be run first)
@@ -192,6 +194,23 @@ export default class App {
                 }
             })
         )
+    }
+
+    getControllerDependencies(controllerClass: any): any[] {
+        // console.log(`\n${controllerClass.name} in initializing, it has the following dependencies...`)
+
+        const dependencies = []
+        // dependencies.push(5)
+
+        const classParameters = Reflect.getMetadata("design:paramtypes", controllerClass)
+        // console.log(classParameters)
+        // console.log(`The DIContainer currently contains:`, DIContainer)
+
+        for (const param of classParameters) {
+            dependencies.push(DIContainer.get(param))
+        }
+
+        return dependencies
     }
 
     checkDuplicatedRoutes(routes: RouteMapItem[]) {

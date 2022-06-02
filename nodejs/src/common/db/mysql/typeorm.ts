@@ -1,7 +1,7 @@
 import mysql2 from "mysql2"
 
 import { AppConfig } from "src/config"
-import Employee from "src/modules/employees/employees.model"
+import Employee from "src/modules/employees/employee.model"
 import { DataSource } from "typeorm"
 import { Customer, Office, Product, User } from "src/entities"
 import { Role } from "src/modules/user/user.model"
@@ -15,7 +15,7 @@ const TypeOrmProvider = new DataSource({
     username: AppConfig.dbConfig.mysql.user,
     password: AppConfig.dbConfig.mysql.password,
     database: AppConfig.dbConfig.mysql.database,
-    synchronize: true,
+    synchronize: false,
     logging: true,
     entities: [Role, Office, Employee, Customer, User, ProductLine, Product, Order, OrderDetail],
     subscribers: [],

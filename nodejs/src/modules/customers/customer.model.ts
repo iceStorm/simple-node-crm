@@ -37,9 +37,9 @@ export default class Customer extends BaseEntity {
     @Column({ length: 50 })
     country!: string
 
-    @ManyToOne((type) => Employee, { nullable: true })
+    @ManyToOne((type) => Employee, { nullable: true, eager: true})
     @JoinColumn({ name: "salesRepEmployeeNumber" })
-    salesRepEmployeeNumber!: number
+    salesRepEmployeeNumber!: Employee
 
     @Column({ nullable: true, type: "decimal", precision: 10, scale: 2 })
     creditLimit!: number
