@@ -7,6 +7,16 @@ import EmployeeNotFoundError from "../errors/EmployeeNotFoundError"
 
 @Injectable()
 export class MySQLEmployeeStore extends EmployeeStore {
+    async getReporteessOfEmployee(employeeNumber: number): Promise<Employee[]> {
+        const reportees = await Employee.findAll({
+            where: {
+                reportsTo: employeeNumber,
+            },
+        })
+
+        return reportees
+    }
+
     async getCustomersOfEmployee(employeeNumber: number): Promise<Customer[]> {
         const customers = Customer.findAll({
             where: {
