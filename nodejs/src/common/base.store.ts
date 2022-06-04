@@ -1,6 +1,7 @@
+import { Model } from "sequelize-typescript"
 import BaseModel from "./base.model"
 
-export default abstract class BaseStore<T> {
+export default abstract class BaseStore<T extends Model> {
     /**
      * Getting all Objects from DB.
      */

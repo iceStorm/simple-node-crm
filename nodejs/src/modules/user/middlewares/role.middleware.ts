@@ -11,7 +11,7 @@ export type Role = "President" | "Manager" | "Leader" | "Staff"
  * @returns
  */
 export const Roles = (...roles: Role[]) => {
-    return (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
+    return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
         const originalMethod = descriptor.value
 
         DecoratorMiddlewareFactory.create({
