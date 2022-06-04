@@ -12,8 +12,8 @@ export const app = new App({
 
 SequelizeAdapter.sync({
     logging: console.log,
-    alter: true,
-    force: true,
+    // alter: true,
+    // force: true,
 }).then(() => {
     app.listen()
 })

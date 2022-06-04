@@ -9,6 +9,7 @@ import EmployeeService from "./employee.service"
 import { Get, Post } from "src/core/decorators/http.decorator"
 import { ParamsDictionary } from "express-serve-static-core"
 import { ParsedQs } from "qs"
+import Customer from "../customers/customer.model"
 
 @Controller("/employees")
 export default class EmployeeController extends BaseController<Employee, EmployeeService, EmployeeStore> {
@@ -16,26 +17,13 @@ export default class EmployeeController extends BaseController<Employee, Employe
         super(employeeService, employeeStore)
     }
 
-    @Get("")
-    // override async getAll(req: Request, res: Response, next: NextFunction) {
-    //     console.log(this)
-
-    //     // const all = await this.service.getAllEmployees()
-    //     // res.status(200).send(all)
-    // }
-    override async getAll(
-        req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>,
-        res: Response<any, Record<string, any>>,
-        next: NextFunction
-    ): Promise<void> {
-        res.status(200).send("all")
+    @Get("/:id/customers")
+    async getCustomersOfEmployee(req: Request, res: Response) {
+        try {
+            const customers = await this.store.getCustomersOfEmployee(parseInt(req.params["id"]))
+            res.status(200).send(customers)
+        } catch (error) {
+            res.status(500).send(error)
+        }
     }
-
-    // @Post("")
-    // // @Authenticated
-    // create(req: Request, res: Response, next: NextFunction): void {
-    //     // return super.create(req, res, next)
-    //     // this.store.
-    //     next("abc")
-    // }
 }

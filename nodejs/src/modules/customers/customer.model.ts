@@ -13,11 +13,11 @@ import {
 import { Employee } from "src/entities"
 
 @Table
-export default class Customer extends Model {
+export default class Customer extends Model<Customer> {
     @AutoIncrement
     @PrimaryKey
     @Column({ type: DataType.INTEGER({ precision: 11 }) })
-    customerNumber!: number
+    customerNumber?: number
 
     @AllowNull(false)
     @Column({ type: DataType.STRING(50) })

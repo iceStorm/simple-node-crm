@@ -157,6 +157,7 @@ export default class App {
             for (const handler of routerHandlers) {
                 // use the actual handler method at the end (middlewares need to be run first)
                 router[(handler as AppRoute).httpMethod](handler.path, handler.method.bind(controllerInstance))
+                // console.log(handler.method, handler.method.prototype)
 
                 routesMapTable.push({
                     router: routerRootPath,
