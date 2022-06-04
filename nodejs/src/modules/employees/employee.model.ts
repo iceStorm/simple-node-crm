@@ -1,4 +1,15 @@
-import { Table, Column, BelongsTo, HasOne, DataType, Model, ForeignKey, HasMany, PrimaryKey } from "sequelize-typescript"
+import {
+    Table,
+    Column,
+    BelongsTo,
+    HasOne,
+    DataType,
+    Model,
+    ForeignKey,
+    HasMany,
+    PrimaryKey,
+    AllowNull,
+} from "sequelize-typescript"
 import { Optional } from "sequelize"
 
 import { Role } from "../user/user.model"
@@ -21,37 +32,47 @@ import { SequelizeAdapter } from "src/common/db/mysql"
 @Table
 export default class Employee extends Model<Employee> {
     @PrimaryKey
-    @Column
+    @Column({ type: DataType.INTEGER({ precision: 11 }) })
     employeeNumber!: number
 
+    @AllowNull(false)
     @Column({ type: DataType.STRING(50) })
     lastName!: string
 
+    @AllowNull(false)
     @Column({ type: DataType.STRING(50) })
     firstName!: string
 
-    @Column({ type: DataType.STRING(50) })
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(10) })
     extension!: string
 
-    @Column({ type: DataType.STRING(50) })
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(100) })
     email!: string
 
     @BelongsTo(() => Office)
     office!: Office
 
     @ForeignKey(() => Office)
-    @Column({ type: DataType.STRING() })
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(10) })
     officeCode!: string
 
-    @ForeignKey(() => Role)
-    @Column
-    roleId!: number
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(50) })
+    jobTitle!: string
 
-    @BelongsTo(() => Role)
-    role!: Role
+    // @ForeignKey(() => Role)
+    // @AllowNull(false)
+    // @Column
+    // roleId!: number
+
+    // @BelongsTo(() => Role)
+    // role!: Role
 
     @ForeignKey(() => Employee)
-    @Column
+    @Column({ type: DataType.INTEGER({ precision: 11 }) })
     reportsTo?: number
 
     @BelongsTo(() => Employee)

@@ -8,6 +8,10 @@ import {
     PrimaryKey,
     HasMany,
     Length,
+    AutoIncrement,
+    AllowNull,
+    Unique,
+    Default,
 } from "sequelize-typescript"
 
 import Employee from "../employees/employee.model"
@@ -18,10 +22,14 @@ export default class User extends Model {
     @Column({ type: DataType.STRING(50) })
     username!: string
 
-    @Column
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(255) })
     password!: string
 
     @ForeignKey(() => Employee)
+    @AllowNull(false)
+    @Unique
+    @Column({ type: DataType.INTEGER })
     employeeNumber!: number
 
     @BelongsTo(() => Employee)
@@ -30,13 +38,16 @@ export default class User extends Model {
 
 @Table
 export class Role extends Model {
+    @AutoIncrement
     @PrimaryKey
-    @Column
-    declare id: number
+    @Column({ type: DataType.INTEGER({ precision: 11 }) })
+    roleId!: number
 
-    @Column({ type: DataType.STRING(50), unique: true })
+    @AllowNull(false)
+    @Unique
+    @Column({ type: DataType.STRING(50) })
     name!: string
 
-    @HasMany(() => Employee)
-    employees!: Employee[]
+    // @HasMany(() => Employee)
+    // employees!: Employee[]
 }

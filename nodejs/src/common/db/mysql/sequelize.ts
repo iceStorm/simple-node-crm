@@ -15,8 +15,11 @@ const sequelizeAdapter = new Sequelize({
     username: AppConfig.dbConfig.mysql.user,
     password: AppConfig.dbConfig.mysql.password,
     models: [Office, Role, User, Employee, Customer
-        // , Product, ProductLine, Order, OrderDetail
+        , Product, ProductLine, Order, OrderDetail
     ],
+    define: {
+        timestamps: false,
+    }
 })
 
 export default sequelizeAdapter

@@ -7,21 +7,22 @@ import {
     ForeignKey,
     PrimaryKey,
     HasMany,
+    AllowNull,
 } from "sequelize-typescript"
 
 @Table
 export class ProductLine extends Model {
     @PrimaryKey
-    @Column
+    @Column({ type: DataType.STRING(50) })
     productLine!: string
 
-    @Column({ type: DataType.STRING(4000), allowNull: true })
+    @Column({ type: DataType.STRING(4000) })
     textDescription!: string
 
-    @Column({ type: "mediumtext", allowNull: true })
+    @Column({ type: "mediumtext" })
     htmlDescription!: string
 
-    @Column({ type: "mediumblob", allowNull: true })
+    @Column({ type: "mediumblob" })
     image!: string
 
     @HasMany(() => Product)
@@ -31,34 +32,42 @@ export class ProductLine extends Model {
 @Table
 export default class Product extends Model {
     @PrimaryKey
-    @Column
+    @Column({ type: DataType.STRING(15) })
     productCode!: string
 
+    @AllowNull(false)
     @Column({ type: DataType.STRING(70) })
     productName!: string
 
-
     @ForeignKey(() => ProductLine)
-    productLineId!: string
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(50) })
+    productLine!: string
 
     @BelongsTo(() => ProductLine)
-    productLine!: ProductLine
+    theProductLine!: ProductLine
 
+    @AllowNull(false)
     @Column({ type: DataType.STRING(10) })
     productScale!: string
 
-    @Column({ type: DataType.STRING(10) })
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(50) })
     productVendor!: string
 
+    @AllowNull(false)
     @Column({ type: DataType.TEXT })
     productDescription!: string
 
-    @Column({ type: "smallint" })
+    @AllowNull(false)
+    @Column({ type: DataType.SMALLINT({ precision: 6 }) })
     quantityInStock!: number
 
+    @AllowNull(false)
     @Column({ type: DataType.DECIMAL(10, 2) })
     buyPrice!: number
 
+    @AllowNull(false)
     @Column({ type: DataType.DECIMAL(10, 2) })
     MSRP!: number
 }

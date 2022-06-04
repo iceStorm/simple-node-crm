@@ -1,35 +1,51 @@
-import { Table, Column, BelongsTo, DataType, Model, ForeignKey, HasMany, PrimaryKey } from "sequelize-typescript"
+import {
+    Table,
+    Column,
+    BelongsTo,
+    DataType,
+    Model,
+    ForeignKey,
+    HasMany,
+    PrimaryKey,
+    AllowNull,
+} from "sequelize-typescript"
 
 import { Employee } from "../../entities"
 
 @Table
 export default class Office extends Model {
     @PrimaryKey
-    @Column
+    @Column({ type: DataType.STRING(10) })
     officeCode!: string
 
-    @Column
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(50) })
     city!: string
 
-    @Column({ type: DataType.TEXT })
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(50) })
     phone!: string
 
-    @Column({ type: DataType.TEXT })
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(50) })
     addressLine1!: string
 
-    @Column({ type: DataType.TEXT, allowNull: true })
+    @Column({ type: DataType.STRING(50) })
     addressLine2?: string
 
-    @Column({ type: DataType.TEXT, allowNull: true })
+    @Column({ type: DataType.STRING(50) })
     state?: string
 
-    @Column({ type: DataType.TEXT })
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(50) })
     country!: string
 
-    @Column({ type: DataType.TEXT })
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(15) })
     postalCode!: string
 
-    @Column({ type: DataType.TEXT })
+    @AllowNull(false)
+    @Column({ type: DataType.STRING(10) })
     territory!: string
 
     @HasMany(() => Employee)
