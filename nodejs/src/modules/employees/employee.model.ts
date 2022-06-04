@@ -33,7 +33,7 @@ import { SequelizeAdapter } from "src/common/db/mysql"
 export default class Employee extends Model<Employee> {
     @PrimaryKey
     @Column({ type: DataType.INTEGER({ precision: 11 }) })
-    employeeNumber!: number
+    employeeNumber?: number
 
     @AllowNull(false)
     @Column({ type: DataType.STRING(50) })
@@ -83,4 +83,7 @@ export default class Employee extends Model<Employee> {
 
     @HasOne(() => User)
     user!: User
+
+    @HasMany(() => Customer)
+    customers!: Customer[]
 }

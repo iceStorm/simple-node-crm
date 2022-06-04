@@ -20,7 +20,7 @@ import Employee from "../employees/employee.model"
 export default class User extends Model {
     @PrimaryKey
     @Column({ type: DataType.STRING(50) })
-    username!: string
+    username?: string
 
     @AllowNull(false)
     @Column({ type: DataType.STRING(255) })

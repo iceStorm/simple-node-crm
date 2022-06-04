@@ -16,6 +16,8 @@ export type AppMiddleware = (request: Request, response: Response, next: NextFun
 const HTTPMethodDecoratorFactory = (method: HTTPMethod) => {
     return (path: string) => {
         return (target: object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
+            // console.log(target)
+
             // getting the method's class (class type, not a string)
             const className = target.constructor
 
