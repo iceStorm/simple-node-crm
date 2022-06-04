@@ -1,5 +1,5 @@
 -- OFFICE
-insert  into `office`(`officeCode`,`city`,`phone`,`addressLine1`,`addressLine2`,`state`,`country`,`postalCode`,`territory`) values 
+insert  into `Offices`(`officeCode`,`city`,`phone`,`addressLine1`,`addressLine2`,`state`,`country`,`postalCode`,`territory`) values 
 
 ('1','San Francisco','+1 650 219 4782','100 Market Street','Suite 300','CA','USA','94080','NA'),
 ('2','Boston','+1 215 837 0825','1550 Court Place','Suite 102','MA','USA','02107','NA'),
@@ -10,43 +10,41 @@ insert  into `office`(`officeCode`,`city`,`phone`,`addressLine1`,`addressLine2`,
 ('7','London','+44 20 7877 2041','25 Old Broad Street','Level 7',NULL,'UK','EC2N 1HN','EMEA');
 
 -- ROLE
-insert into `role`(`name`) values
+insert into `Roles`(`name`) values
 ('President'),
 ('Manager'),
 ('Leader'),
 ('Staff');
 
 -- EMPLOYEES
-insert  into `employee`(`employeeNumber`,`lastName`,`firstName`,`extension`,`email`,`officeCode`,`reportsTo`,`roleId`) values 
+insert  into `employees`(`employeeNumber`,`lastName`,`firstName`,`extension`,`email`,`officeCode`,`reportsTo`,`jobTitle`) values 
 
-(1002,'Murphy','Diane','x5800','dmurphy@classicmodelcars.com','1',NULL,1),
-(1056,'Patterson','Mary','x4611','mpatterso@classicmodelcars.com','1',1002,3),
-(1076,'Firrelli','Jeff','x9273','jfirrelli@classicmodelcars.com','1',1002,3),
-(1088,'Patterson','William','x4871','wpatterson@classicmodelcars.com','6',1056,2),
-(1102,'Bondur','Gerard','x5408','gbondur@classicmodelcars.com','4',1056,2),
-(1143,'Bow','Anthony','x5428','abow@classicmodelcars.com','1',1056,2),
-(1165,'Jennings','Leslie','x3291','ljennings@classicmodelcars.com','1',1143,4),
-(1166,'Thompson','Leslie','x4065','lthompson@classicmodelcars.com','1',1143,4),
-(1188,'Firrelli','Julie','x2173','jfirrelli@classicmodelcars.com','2',1143,4),
-(1216,'Patterson','Steve','x4334','spatterson@classicmodelcars.com','2',1143,4),
-(1286,'Tseng','Foon Yue','x2248','ftseng@classicmodelcars.com','3',1143,4),
-(1323,'Vanauf','George','x4102','gvanauf@classicmodelcars.com','3',1143,4),
-(1337,'Bondur','Loui','x6493','lbondur@classicmodelcars.com','4',1102,4),
-(1370,'Hernandez','Gerard','x2028','ghernande@classicmodelcars.com','4',1102,4),
-(1401,'Castillo','Pamela','x2759','pcastillo@classicmodelcars.com','4',1102,4),
-(1501,'Bott','Larry','x2311','lbott@classicmodelcars.com','7',1102,4),
-(1504,'Jones','Barry','x102','bjones@classicmodelcars.com','7',1102,4),
-(1611,'Fixter','Andy','x101','afixter@classicmodelcars.com','6',1088,4),
-(1612,'Marsh','Peter','x102','pmarsh@classicmodelcars.com','6',1088,4),
-(1619,'King','Tom','x103','tking@classicmodelcars.com','6',1088,4),
-(1621,'Nishi','Mami','x101','mnishi@classicmodelcars.com','5',1056,3),
-(1625,'Kato','Yoshimi','x102','ykato@classicmodelcars.com','5',1621,4),
-(1702,'Gerard','Martin','x2312','mgerard@classicmodelcars.com','4',1102,4);
-
-
+(1002,'Murphy','Diane','x5800','dmurphy@classicmodelcars.com','1',NULL,'President'),
+(1056,'Patterson','Mary','x4611','mpatterso@classicmodelcars.com','1',1002,'VP Sales'),
+(1076,'Firrelli','Jeff','x9273','jfirrelli@classicmodelcars.com','1',1002,'VP Marketing'),
+(1088,'Patterson','William','x4871','wpatterson@classicmodelcars.com','6',1056,'Sales Manager (APAC)'),
+(1102,'Bondur','Gerard','x5408','gbondur@classicmodelcars.com','4',1056,'Sale Manager (EMEA)'),
+(1143,'Bow','Anthony','x5428','abow@classicmodelcars.com','1',1056,'Sales Manager (NA)'),
+(1165,'Jennings','Leslie','x3291','ljennings@classicmodelcars.com','1',1143,'Sales Rep'),
+(1166,'Thompson','Leslie','x4065','lthompson@classicmodelcars.com','1',1143,'Sales Rep'),
+(1188,'Firrelli','Julie','x2173','jfirrelli@classicmodelcars.com','2',1143,'Sales Rep'),
+(1216,'Patterson','Steve','x4334','spatterson@classicmodelcars.com','2',1143,'Sales Rep'),
+(1286,'Tseng','Foon Yue','x2248','ftseng@classicmodelcars.com','3',1143,'Sales Rep'),
+(1323,'Vanauf','George','x4102','gvanauf@classicmodelcars.com','3',1143,'Sales Rep'),
+(1337,'Bondur','Loui','x6493','lbondur@classicmodelcars.com','4',1102,'Sales Rep'),
+(1370,'Hernandez','Gerard','x2028','ghernande@classicmodelcars.com','4',1102,'Sales Rep'),
+(1401,'Castillo','Pamela','x2759','pcastillo@classicmodelcars.com','4',1102,'Sales Rep'),
+(1501,'Bott','Larry','x2311','lbott@classicmodelcars.com','7',1102,'Sales Rep'),
+(1504,'Jones','Barry','x102','bjones@classicmodelcars.com','7',1102,'Sales Rep'),
+(1611,'Fixter','Andy','x101','afixter@classicmodelcars.com','6',1088,'Sales Rep'),
+(1612,'Marsh','Peter','x102','pmarsh@classicmodelcars.com','6',1088,'Sales Rep'),
+(1619,'King','Tom','x103','tking@classicmodelcars.com','6',1088,'Sales Rep'),
+(1621,'Nishi','Mami','x101','mnishi@classicmodelcars.com','5',1056,'Sales Rep'),
+(1625,'Kato','Yoshimi','x102','ykato@classicmodelcars.com','5',1621,'Sales Rep'),
+(1702,'Gerard','Martin','x2312','mgerard@classicmodelcars.com','4',1102,'Sales Rep');
 
 -- PRODUCT LINE
-insert  into `product_line`(`productLine`,`textDescription`,`htmlDescription`,`image`) values 
+insert  into `ProductLines`(`productLine`,`textDescription`,`htmlDescription`,`image`) values 
 
 ('Classic Cars','Attention car enthusiasts: Make your wildest car ownership dreams come true. Whether you are looking for classic muscle cars, dream sports cars or movie-inspired miniatures, you will find great choices in this category. These replicas feature superb attention to detail and craftsmanship and offer features such as working steering system, opening forward compartment, opening rear trunk with removable spare wheel, 4-wheel independent spring suspension, and so on. The models range in size from 1:10 to 1:24 scale and include numerous limited edition and several out-of-production vehicles. All models include a certificate of authenticity from their manufacturers and come fully assembled and ready for display in the home or office.',NULL,NULL),
 ('Motorcycles','Our motorcycles are state of the art replicas of classic as well as contemporary motorcycle legends such as Harley Davidson, Ducati and Vespa. Models contain stunning details such as official logos, rotating wheels, working kickstand, front suspension, gear-shift lever, footbrake lever, and drive chain. Materials used include diecast and plastic. The models range in size from 1:10 to 1:50 scale and include numerous limited edition and several out-of-production vehicles. All models come fully assembled and ready for display in the home or office. Most include a certificate of authenticity.',NULL,NULL),
@@ -57,7 +55,7 @@ insert  into `product_line`(`productLine`,`textDescription`,`htmlDescription`,`i
 ('Vintage Cars','Our Vintage Car models realistically portray automobiles produced from the early 1900s through the 1940s. Materials used include Bakelite, diecast, plastic and wood. Most of the replicas are in the 1:18 and 1:24 scale sizes, which provide the optimum in detail and accuracy. Prices range from $30.00 up to $180.00 for some special limited edition replicas. All models include a certificate of authenticity from their manufacturers and come fully assembled and ready for display in the home or office.',NULL,NULL);
 
 -- PRODUCT
-insert  into `product`(`productCode`,`productName`,`productLine`,`productScale`,`productVendor`,`productDescription`,`quantityInStock`,`buyPrice`,`MSRP`) values 
+insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`,`productVendor`,`productDescription`,`quantityInStock`,`buyPrice`,`MSRP`) values 
 
 ('S10_1678','1969 Harley Davidson Ultimate Chopper','Motorcycles','1:10','Min Lin Diecast','This replica features working kickstand, front suspension, gear-shift lever, footbrake lever, drive chain, wheels and steering. All parts are particularly delicate due to their precise scale and require special care and attention.',7933,'48.81','95.70'),
 ('S10_1949','1952 Alpine Renault 1300','Classic Cars','1:10','Classic Metal Creations','Turnable front wheels; steering function; detailed interior; detailed engine; opening hood; opening trunk; opening doors; and detailed chassis.',7305,'98.58','214.30'),
@@ -171,7 +169,7 @@ insert  into `product`(`productCode`,`productName`,`productLine`,`productScale`,
 ('S72_3212','Pont Yacht','Ships','1:72','Unimax Art Galleries','Measures 38 inches Long x 33 3/4 inches High. Includes a stand.\r\nMany extras including rigging, long boats, pilot house, anchors, etc. Comes with 2 masts, all square-rigged',414,'33.30','54.60');
 
 -- CUSTOMER
-insert  into `customer`(`customerNumber`,`customerName`,`contactLastName`,`contactFirstName`,`phone`,`addressLine1`,`addressLine2`,`city`,`state`,`postalCode`,`country`,`salesRepEmployeeNumber`,`creditLimit`) values 
+insert  into `Customers`(`customerNumber`,`customerName`,`contactLastName`,`contactFirstName`,`phone`,`addressLine1`,`addressLine2`,`city`,`state`,`postalCode`,`country`,`salesRepEmployeeNumber`,`creditLimit`) values 
 
 (103,'Atelier graphique','Schmitt','Carine ','40.32.2555','54, rue Royale',NULL,'Nantes',NULL,'44000','France',1370,'21000.00'),
 (112,'Signal Gift Stores','King','Jean','7025551838','8489 Strong St.',NULL,'Las Vegas','NV','83030','USA',1166,'71800.00'),
@@ -297,7 +295,7 @@ insert  into `customer`(`customerNumber`,`customerName`,`contactLastName`,`conta
 (496,'Kelly\'s Gift Shop','Snowden','Tony','+64 9 5555500','Arenales 1938 3\'A\'',NULL,'Auckland  ',NULL,NULL,'New Zealand',1612,'110000.00');
 
 -- ORDER
-insert  into `order`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`status`,`comments`,`customerNumber`) values 
+insert  into `Orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`status`,`comments`,`customerNumber`) values 
 
 (10100,'2003-01-06','2003-01-13','2003-01-10','Shipped',NULL,363),
 (10101,'2003-01-09','2003-01-18','2003-01-11','Shipped','Check on availability.',128),
@@ -627,7 +625,7 @@ insert  into `order`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`sta
 (10425,'2005-05-31','2005-06-07',NULL,'In Process',NULL,119);
 
 -- ORDER DETAIL
-insert  into `order_detail`(`orderNumber`,`productCode`,`quantityOrdered`,`priceEach`,`orderLineNumber`) values 
+insert  into `OrderDetails`(`orderNumber`,`productCode`,`quantityOrdered`,`priceEach`,`orderLineNumber`) values 
 
 (10100,'S18_1749',30,'136.00',3),
 
