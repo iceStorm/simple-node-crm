@@ -1,41 +1,42 @@
 import {
-    BaseEntity,
+    Table,
     Column,
-    Entity,
-    JoinColumn,
-    OneToMany,
-    OneToOne,
-    PrimaryColumn,
-    PrimaryGeneratedColumn,
-    Unique,
-} from "typeorm"
+    BelongsTo,
+    DataType,
+    Model,
+    ForeignKey,
+    PrimaryKey,
+    HasMany,
+    Length,
+} from "sequelize-typescript"
+
 import Employee from "../employees/employee.model"
 
-@Entity()
-@Unique(["employee"])
-export default class User extends BaseEntity {
-    @PrimaryColumn()
+@Table
+export default class User extends Model {
+    @PrimaryKey
+    @Column({ type: DataType.STRING(50) })
     username!: string
 
-    @Column()
+    @Column
     password!: string
 
-    @OneToOne((type) => Employee, (e) => e.user, { nullable: false })
-    @JoinColumn({ name: "employeeNumber" })
+    @ForeignKey(() => Employee)
+    employeeNumber!: number
+
+    @BelongsTo(() => Employee)
     employee!: Employee
 }
 
-@Entity()
-export class Role extends BaseEntity {
-    @PrimaryGeneratedColumn("increment")
-    id!: number
+@Table
+export class Role extends Model {
+    @PrimaryKey
+    @Column
+    declare id: number
 
-    @Column({
-        unique: true,
-        length: 50,
-    })
+    @Column({ type: DataType.STRING(50), unique: true })
     name!: string
 
-    // @OneToMany((type) => Employee, (e) => e.role)
-    // employees!: Employee[]
+    @HasMany(() => Employee)
+    employees!: Employee[]
 }

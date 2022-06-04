@@ -28,7 +28,7 @@ export default class EmployeeController extends BaseController<Employee, Employe
         res: Response<any, Record<string, any>>,
         next: NextFunction
     ): Promise<void> {
-        res.status(200).send('all')
+        res.status(200).send("all")
     }
 
     // @Post("")

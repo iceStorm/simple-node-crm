@@ -5,14 +5,16 @@ import UserStore from "../user.store"
 @Injectable()
 export class MySQLUserStore extends UserStore {
     async authenticate(username: string, password: string) {
-        return User.findOneBy({
-            username,
-            password,
+        return User.findOne({
+            where: {
+                username,
+                password,
+            },
         })
     }
 
     getAll(): Promise<User[]> {
-        return User.find()
+        return User.findAll()
     }
 
     /**
@@ -21,7 +23,7 @@ export class MySQLUserStore extends UserStore {
      * @returns Promise User|null
      */
     getByUsername(username: string): Promise<User | null> {
-        return User.findOneBy({ username: username })
+        return User.findOne({ where: { username } })
     }
 
     getById(id: number): Promise<User> {

@@ -1,7 +1,6 @@
 import Employee from "./employee.model"
 import EmployeesStore from "./employee.store"
 import { Injectable } from "src/core/decorators"
-import { DIContainer } from "src/core/injector"
 import BaseService from "src/common/base.service"
 
 @Injectable()

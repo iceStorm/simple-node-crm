@@ -1,69 +1,61 @@
-import {
-    BaseEntity,
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToMany,
-    ManyToOne,
-    OneToMany,
-    OneToOne,
-    PrimaryColumn,
-    PrimaryGeneratedColumn,
-} from "typeorm"
-import { Customer, Product } from "../../entities"
+import { Table, Column, BelongsTo, DataType, Model, ForeignKey, PrimaryKey, HasMany } from "sequelize-typescript"
+import { Customer, Employee, Product } from "../../entities"
 
-@Entity()
-export default class Order extends BaseEntity {
-    @PrimaryGeneratedColumn("increment")
+@Table
+export default class Order extends Model {
+    @PrimaryKey
+    @Column
     orderNumber!: number
 
-    // @OneToMany((type) => OrderDetail)
-    // orderDetails!: OrderDetail[]
+    @HasMany(() => OrderDetail)
+    orderDetails!: OrderDetail[]
 
-    @Column({ type: "date" })
+    @Column({ type: DataType.DATE })
     orderDate!: Date
 
-    @Column({ type: "date" })
+    @Column({ type: DataType.DATE })
     requiredDate!: Date
 
-    @Column({ type: "date", nullable: true })
+    @Column({ type: DataType.DATE, allowNull: true })
     shippedDate!: Date
 
-    @Column({ length: 15 })
+    @Column
     status!: string
 
-    @Column({ type: "text", nullable: true })
+    @Column({ type: DataType.STRING, allowNull: true })
     comments!: string
 
-    @ManyToOne((type) => Customer, { nullable: false })
-    @JoinColumn({ name: "customerNumber" })
+    @ForeignKey(() => Customer)
     customerNumber!: number
+
+    @BelongsTo(() => Customer)
+    customer!: Customer
 }
 
-@Entity()
-export class OrderDetail extends BaseEntity {
-    @PrimaryColumn({ primary: true })
-    @ManyToOne((type) => Order, o => o.orderNumber)
-    @JoinColumn({ name: "orderNumber" })
+@Table
+export class OrderDetail extends Model {
+    @ForeignKey(() => Order)
+    @PrimaryKey
+    @Column
     orderNumber!: number
 
-    // @ManyToOne((type) => Order, (o) => o.orderDetails)
-    // order!: Order
+    @BelongsTo(() => Order, )
+    order!: Order
 
-    @PrimaryColumn({ primary: true, length: 15 })
-    @ManyToOne((type) => Product)
-    @JoinColumn({ name: "productCode" })
+    @ForeignKey(() => Product)
+    @PrimaryKey
+    @Column
     productCode!: string
 
-    // @ManyToOne((type) => Order, (o) => o.orderDetails)
-    // product!: Product
+    @BelongsTo(() => Product)
+    product!: Product
 
-    @Column()
+    @Column
     quantityOrdered!: number
 
-    @Column({ type: "decimal", precision: 10, scale: 2 })
+    @Column({ type: DataType.DECIMAL(10, 2) })
     priceEach!: number
 
-    @Column({ type: "smallint", precision: 6 })
+    @Column({ type: DataType.SMALLINT({ length: 6 }) })
     orderLineNumber!: number
 }

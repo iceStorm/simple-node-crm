@@ -1,60 +1,64 @@
 import {
-    BaseEntity,
+    Table,
     Column,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    OneToMany,
-    OneToOne,
-    PrimaryColumn,
-    PrimaryGeneratedColumn,
-} from "typeorm"
+    BelongsTo,
+    DataType,
+    Model,
+    ForeignKey,
+    PrimaryKey,
+    HasMany,
+} from "sequelize-typescript"
 
-@Entity()
-export class ProductLine extends BaseEntity {
-    @PrimaryColumn({ length: 50 })
+@Table
+export class ProductLine extends Model {
+    @PrimaryKey
+    @Column
     productLine!: string
 
-    @Column({ length: 4000, nullable: true })
+    @Column({ type: DataType.STRING(4000), allowNull: true })
     textDescription!: string
 
-    @Column({ type: "mediumtext", nullable: true })
+    @Column({ type: "mediumtext", allowNull: true })
     htmlDescription!: string
 
-    @Column({ type: "mediumblob", nullable: true })
+    @Column({ type: "mediumblob", allowNull: true })
     image!: string
 
-    @OneToMany((type) => Product, (p) => p.productLine)
+    @HasMany(() => Product)
     products!: Product[]
 }
 
-@Entity()
-export default class Product extends BaseEntity {
-    @PrimaryColumn("varchar", { length: 15 })
+@Table
+export default class Product extends Model {
+    @PrimaryKey
+    @Column
     productCode!: string
 
-    @Column("varchar", { length: 70 })
+    @Column({ type: DataType.STRING(70) })
     productName!: string
 
-    @ManyToOne((type) => ProductLine)
-    @JoinColumn({ name: "productLine" })
+
+    @ForeignKey(() => ProductLine)
+    productLineId!: string
+
+    @BelongsTo(() => ProductLine)
     productLine!: ProductLine
 
-    @Column("varchar", { length: 10 })
+    @Column({ type: DataType.STRING(10) })
     productScale!: string
 
-    @Column("varchar", { length: 50 })
+    @Column({ type: DataType.STRING(10) })
     productVendor!: string
 
-    @Column({ type: "text" })
+    @Column({ type: DataType.TEXT })
     productDescription!: string
 
     @Column({ type: "smallint" })
     quantityInStock!: number
 
-    @Column({ type: "decimal", precision: 10, scale: 2 })
+    @Column({ type: DataType.DECIMAL(10, 2) })
     buyPrice!: number
 
-    @Column({ type: "decimal", precision: 10, scale: 2 })
+    @Column({ type: DataType.DECIMAL(10, 2) })
     MSRP!: number
 }
