@@ -8,14 +8,14 @@ export type AppRoute = {
     path: string
     httpMethod: HTTPMethod
     method: any
-    middlewares?: AppMiddleware[]
+    // middlewares?: AppMiddleware[]
 }
 
-export type AppMiddleware = (request: Request, response: Response, next: NextFunction, ...params: any[]) => void
+// export type AppMiddleware = (request: Request, response: Response, next: NextFunction, ...params: any[]) => void
 
 const HTTPMethodDecoratorFactory = (method: HTTPMethod) => {
     return (path: string) => {
-        return (target: object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => {
+        return (target: object, propertyKey: string, descriptor: PropertyDescriptor) => {
             // console.log(target)
 
             // getting the method's class (class type, not a string)
