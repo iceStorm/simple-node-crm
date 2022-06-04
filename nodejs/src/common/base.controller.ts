@@ -1,15 +1,11 @@
 import { NextFunction, Request, Response } from "express"
-import { number } from "joi"
+import { Model } from "sequelize-typescript"
 
-import { Delete, Get, Patch, Post, Put } from "src/core/decorators/http.decorator"
-import { DIContainer } from "src/core/injector"
-import EmployeeNotFoundError from "src/modules/employees/errors/EmployeeNotFoundError"
-import { Authenticated } from "src/modules/user/middlewares/authenticated.middleware"
-import { BaseEntity } from "typeorm"
+import { Delete, Get, Patch, Post } from "src/core/decorators/http.decorator"
 import BaseService from "./base.service"
 import BaseStore from "./base.store"
 
-export default abstract class BaseController<T extends BaseEntity, S extends BaseService<T>, R extends BaseStore<T>> {
+export default abstract class BaseController<T extends Model, S extends BaseService<T>, R extends BaseStore<T>> {
     constructor(protected service: S, protected store: R) {}
 
     @Get("")

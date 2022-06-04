@@ -5,12 +5,14 @@ import CustomerStore from "../customer.store"
 @Injectable()
 export class MySQLCustomerStore extends CustomerStore {
     getAll(): Promise<Customer[]> {
-        return Customer.find()
+        return Customer.findAll()
     }
 
     getById(id: number): Promise<Customer | null> {
-        return Customer.findOneBy({
-            customerNumber: id,
+        return Customer.findOne({
+            where: {
+                customerNumber: id,
+            },
         })
     }
 

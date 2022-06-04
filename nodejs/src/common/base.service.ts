@@ -1,3 +1,3 @@
-import { BaseEntity } from "typeorm"
+import { Model } from "sequelize-typescript"
 
-export default abstract class BaseService<T extends BaseEntity> {}
+export default abstract class BaseService<T extends Model> {}

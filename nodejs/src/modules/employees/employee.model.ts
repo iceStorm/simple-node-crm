@@ -1,68 +1,65 @@
-import { Office } from "src/entities"
-import {
-    AfterLoad,
-    BaseEntity,
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToMany,
-    ManyToOne,
-    OneToMany,
-    OneToOne,
-    PrimaryGeneratedColumn,
-    Tree,
-    TreeChildren,
-    TreeParent,
-} from "typeorm"
-import User, { Role } from "../user/user.model"
-import Customer from "../customers/customer.model"
+import { Table, Column, BelongsTo, HasOne, DataType, Model, ForeignKey, HasMany, PrimaryKey } from "sequelize-typescript"
+import { Optional } from "sequelize"
 
-@Entity()
-@Tree("adjacency-list")
-export default class Employee extends BaseEntity {
-    @PrimaryGeneratedColumn()
+import { Role } from "../user/user.model"
+import { Office, Customer, User } from "src/entities"
+import { SequelizeAdapter } from "src/common/db/mysql"
+
+// interface EmployeeAttributes {
+//     employeeNumber: number
+//     lastName: string
+//     firstName: string
+//     extension: string
+//     email: string
+//     officeCode: string
+//     roleId: number
+//     reportsTo?: number
+// }
+
+// interface EmployeeCreationAttributes extends Omit<EmployeeAttributes, "employeeNumber" | "id"> {}
+
+@Table
+export default class Employee extends Model<Employee> {
+    @PrimaryKey
+    @Column
     employeeNumber!: number
 
-    @Column({ length: 50 })
+    @Column({ type: DataType.STRING(50) })
     lastName!: string
 
-    @Column({ length: 50 })
+    @Column({ type: DataType.STRING(50) })
     firstName!: string
 
-    @Column({ length: 10 })
+    @Column({ type: DataType.STRING(50) })
     extension!: string
 
-    @Column({ length: 100 })
+    @Column({ type: DataType.STRING(50) })
     email!: string
 
-    @Column()
-    officeCode!: string
-
-    @Column()
-    roleId!: number
-
-    @ManyToMany((type) => Employee, )
-    @JoinColumn({ name: "reportsTo" })
-    reportsTo?: Employee
-
-    // master
-    // @ManyToOne((type) => Employee, (e) => e.reportsTo)
-    // responsibleFor?: Employee[]
-
-    // EMBEDDED PROPS
-    @ManyToOne((type) => Office, (o) => o.officeCode, { nullable: false, eager: true })
-    @JoinColumn({ name: "officeCode" })
+    @BelongsTo(() => Office)
     office!: Office
 
-    @ManyToOne((type) => Role, (r) => r.id, { nullable: false, eager: true })
-    @JoinColumn({ name: "roleId" })
+    @ForeignKey(() => Office)
+    @Column({ type: DataType.STRING() })
+    officeCode!: string
+
+    @ForeignKey(() => Role)
+    @Column
+    roleId!: number
+
+    @BelongsTo(() => Role)
     role!: Role
 
-    @OneToOne((type) => User, (u) => u.employee, { eager: true })
-    user!: User
+    @ForeignKey(() => Employee)
+    @Column
+    reportsTo?: number
 
-    @AfterLoad()
-    getFullName() {
-        return `${this.firstName} ${this.lastName}`
-    }
+    @BelongsTo(() => Employee)
+    reportsToEmployee!: Employee
+
+    @HasMany(() => Employee)
+    responsibleFor?: Employee[]
+
+    @HasOne(() => User)
+    user!: User
 }

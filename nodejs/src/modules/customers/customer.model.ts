@@ -1,49 +1,51 @@
-import { Employee, Office } from "src/entities"
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
-import { Role } from "../user/user.model"
+import { Table, Column, Model, PrimaryKey, ForeignKey, BelongsTo, AutoIncrement, DataType } from "sequelize-typescript"
 
-@Entity()
-export default class Customer extends BaseEntity {
-    @PrimaryGeneratedColumn("increment")
+import { Employee } from "src/entities"
+
+@Table
+export default class Customer extends Model {
+    @AutoIncrement
+    @PrimaryKey
+    @Column
     customerNumber!: number
 
-    @Column("varchar", { length: 50 })
+    @Column({ type: DataType.STRING(50) })
     customerName!: string
 
-    @Column("varchar", { length: 50 })
+    @Column({ type: DataType.STRING(50) })
     contactLastName!: string
 
-    @Column("varchar", { length: 50 })
+    @Column({ type: DataType.STRING(50) })
     contactFirstName!: string
 
-    @Column("varchar", { length: 50 })
+    @Column({ type: DataType.STRING() })
     phone!: string
 
-    @Column("varchar", { length: 50 })
+    @Column({ type: DataType.STRING() })
     addressLine1!: string
 
-    @Column("varchar", { length: 50, nullable: true })
+    @Column({ type: DataType.STRING(), allowNull: true })
     addressLine2!: string
 
-    @Column("varchar", { length: 50 })
+    @Column({ type: DataType.STRING() })
     city!: string
 
-    @Column("varchar", { length: 50, nullable: true })
+    @Column({ type: DataType.STRING(), allowNull: true })
     state!: string
 
-    @Column("varchar", { length: 50, nullable: true })
+    @Column({ type: DataType.STRING(), allowNull: true })
     postalCode!: string
 
-    @Column("varchar", { length: 50 })
+    @Column({ type: DataType.STRING() })
     country!: string
 
-    @ManyToOne((type) => Employee, { nullable: true, eager: true })
-    @JoinColumn({ name: "salesRepEmployeeNumber" })
-    salesRepEmployee!: Employee
-
-    @Column({ nullable: true })
+    @ForeignKey(() => Employee)
+    @Column
     salesRepEmployeeNumber!: number
 
-    @Column({ nullable: true, type: "decimal", precision: 10, scale: 2 })
+    @BelongsTo(() => Employee)
+    salesRepEmployee!: Employee
+
+    @Column({ type: DataType.DECIMAL(10, 2) })
     creditLimit!: number
 }

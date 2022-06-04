@@ -1,36 +1,37 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
+import { Table, Column, BelongsTo, DataType, Model, ForeignKey, HasMany, PrimaryKey } from "sequelize-typescript"
+
 import { Employee } from "../../entities"
 
-@Entity()
-export default class Office extends BaseEntity {
-    @PrimaryColumn("varchar", { length: 10 })
+@Table
+export default class Office extends Model {
+    @PrimaryKey
+    @Column
     officeCode!: string
 
-    @Column("varchar", { length: 50 })
+    @Column
     city!: string
 
-    @Column("varchar", { length: 50 })
+    @Column({ type: DataType.TEXT })
     phone!: string
 
-    @Column("varchar", { length: 50 })
+    @Column({ type: DataType.TEXT })
     addressLine1!: string
 
-    @Column("varchar", { length: 50, nullable: true })
+    @Column({ type: DataType.TEXT, allowNull: true })
     addressLine2?: string
 
-    @Column("varchar", { length: 50, nullable: true })
+    @Column({ type: DataType.TEXT, allowNull: true })
     state?: string
 
-    @Column("varchar", { length: 50 })
+    @Column({ type: DataType.TEXT })
     country!: string
 
-    @Column("varchar", { length: 15 })
+    @Column({ type: DataType.TEXT })
     postalCode!: string
 
-    @Column("varchar", { length: 10 })
+    @Column({ type: DataType.TEXT })
     territory!: string
 
-    // not denoted to be a column, just use in code level
-    // @OneToMany((type) => Employee, (e) => e.officeCode)
-    // employees!: Employee[]
+    @HasMany(() => Employee)
+    employees!: Employee[]
 }

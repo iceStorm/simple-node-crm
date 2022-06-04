@@ -16,7 +16,7 @@ export default class CustomerController extends BaseController<Customer, Custome
     }
 
     @Get("")
-    async getAll(req: Request, res: Response) {
+    override async getAll(req: Request, res: Response) {
         res.status(200).send(await this.customerStore.getAll())
     }
 
