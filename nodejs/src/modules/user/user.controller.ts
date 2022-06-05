@@ -6,7 +6,7 @@ import UserService from "./user.service"
 import BaseController from "src/common/base.controller"
 import UserStore from "./user.store"
 import User from "./user.model"
-import { UserErrorHandler, UserErrorHandler2 } from "./user.error_handler"
+import { UserErrorHandler, UserErrorHandler2 } from "./user.error-handler"
 import { Authenticated, Roles } from "./middlewares"
 
 @Controller("/users", UserErrorHandler)
