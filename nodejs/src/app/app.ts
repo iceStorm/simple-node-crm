@@ -150,11 +150,11 @@ export default class App {
 
             // ROUTER GUARD MIDDLEWARES (PRE-MIDDLEWARES)
             const middlewares = Reflect.getMetadata(DECORATOR_KEYS.GUARD_MIDDLEWARES, controller) ?? []
-            console.log(controller + "middlewares:", middlewares, "\n")
+            // console.log(controller + "middlewares:", middlewares, "\n")
 
             // ERROR MIDDLWARES (POST MIDDLEWARES)
             const errorMiddlewares = Reflect.getMetadata(DECORATOR_KEYS.ERROR_MIDDLEWARES, controller) ?? []
-            console.log("error middlewares:", errorMiddlewares, "\n")
+            // console.log("error middlewares:", errorMiddlewares, "\n")
 
             // each controller has its own router on the root path
             const router = express.Router()
