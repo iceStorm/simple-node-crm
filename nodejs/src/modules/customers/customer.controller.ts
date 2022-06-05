@@ -18,7 +18,7 @@ export default class CustomerController extends BaseController<Customer, Custome
     // @Get("") // will override base.controller method handler with same path and http method
     // override async getAll(req: Request, res: Response) {
     //     // res.status(200).send(await this.customerStore.getAll())
-    //     res.send("customers overrided")
+    //     res.send("customers getAll overrided")
     // }
 
     // @Post("")

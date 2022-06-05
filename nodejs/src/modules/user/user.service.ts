@@ -25,7 +25,7 @@ export default class UserService {
      * @param username
      * @param password
      */
-    async registerUser(emplooyeeEmail: string, username: string, password: string) {
+    async registerUser(employeeEmail: string, username: string, password: string) {
         const userAlreadyExists = await User.findOne({
             where: {
                 username,
@@ -33,7 +33,7 @@ export default class UserService {
         })
 
         if (userAlreadyExists) {
-            throw new UsernameAlreadyExistError(emplooyeeEmail)
+            throw new UsernameAlreadyExistError(employeeEmail)
         }
 
         const hashedPassword = await this.generateHashPassword(password)

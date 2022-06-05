@@ -194,7 +194,7 @@ export default class App {
             this._instance.use(routerRootPath, router)
         }
 
-        this.showRoutingTable(routesMapTable)
+        // this.showRoutingTable(routesMapTable)
         console.log(DIContainer)
     }
 

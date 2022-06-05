@@ -1,13 +1,15 @@
 import { Request, Response, NextFunction } from "express"
+import { MiddlewareDecoratorFactory } from "src/core/decorators/middleware.decorator"
 import NotProvideEnoughDataToRegisterError from "../errors/NotProvideEnoughDataToRegister"
 
-export const CheckRegsiterBody = (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body)
-    const { username, password, employeeEmail } = req.body
+const CheckRegsiterBody = MiddlewareDecoratorFactory((req: Request, res: Response, next: NextFunction) => {
+    const { username, password, email } = req.body
 
-    if (username === undefined || password === undefined || employeeEmail === undefined) {
-        next(new NotProvideEnoughDataToRegisterError())
+    if (username === undefined || password === undefined || email === undefined) {
+        next(new NotProvideEnoughDataToRegisterError("username", "password", "employeeEmail"))
     }
 
     next()
-}
+})
+
+export default CheckRegsiterBody

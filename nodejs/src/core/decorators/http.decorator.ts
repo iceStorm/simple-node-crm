@@ -13,16 +13,13 @@ export type AppRoute = {
 const HTTPMethodDecoratorFactory = (method: HTTPMethod) => {
     return (path: string) => {
         return (target: object, propertyKey: string, descriptor: PropertyDescriptor) => {
-            // console.log("\n\n")
             // console.log(target, target.constructor, propertyKey, method)
 
             // getting the method's class (class type, not a string)
             const className = target.constructor
 
             // getting the className's "ROUTES" metadata that holds routes
-            const routes: Array<AppRoute> = Reflect.hasOwnMetadata(DECORATOR_KEYS.ROUTES, className)
-                ? Reflect.getOwnMetadata(DECORATOR_KEYS.ROUTES, className)
-                : []
+            const routes: Array<AppRoute> = Reflect.getOwnMetadata(DECORATOR_KEYS.ROUTES, className) || []
 
             // this is the first time decorate method inside a controller, so
             // push parent routes first, we will override them if current own (derived) route have the same path
@@ -35,25 +32,13 @@ const HTTPMethodDecoratorFactory = (method: HTTPMethod) => {
                 }
             }
 
-            // console.log("pre own prototype routes:", routes, "\n")
-
             // we check if the routes duplicated with current decorating route, so we will remove the previous route
             const haveDuplicates = routes.filter((r) => r.path == path && r.httpMethod == method)
-            // console.log("haveDuplicates:", haveDuplicates)
 
             haveDuplicates.forEach((d) => {
                 console.log(routes.indexOf(d))
                 routes.splice(routes.indexOf(d), 1)
             })
-            
-            // for (let index = routes.length - 1; index > 0; --index) {
-            //     const route = routes[index]
-
-            //     if (route.method.name == propertyKey) {
-            //         console.log("removing:", route.path, route.httpMethod, route.method)
-            //         routes.splice(index, 1)
-            //     }
-            // }
 
             // pushing the new method decorator's to the className's ROUTES metadata
             routes.push({
@@ -61,8 +46,6 @@ const HTTPMethodDecoratorFactory = (method: HTTPMethod) => {
                 httpMethod: method,
                 method: descriptor.value, // propertyKey is the function name being decorated,
             })
-
-            // console.log("own prototype routes:", routes, "\n")
 
             // re-assign the ROUTES metadata to the className
             Reflect.defineMetadata(DECORATOR_KEYS.ROUTES, routes, className)
