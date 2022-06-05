@@ -28,7 +28,9 @@ export class MySQLEmployeeStore extends EmployeeStore {
     }
 
     getAll(): Promise<Employee[]> {
-        return Employee.findAll()
+        return Employee.findAll({
+            include: [{ model: Customer }, { model: Employee }],
+        })
     }
 
     getById(id: number): Promise<Employee | null> {

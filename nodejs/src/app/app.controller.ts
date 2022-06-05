@@ -18,9 +18,8 @@ export default class AppController {
         res.status(200).send("Server running Ok.")
     }
 
-    @Get("/hi")
-    @Authenticated
     @Roles("President")
+    @Get("/hi")
     hi(req: Request, res: Response) {
         res.status(200).send(this.appService.getHello())
     }

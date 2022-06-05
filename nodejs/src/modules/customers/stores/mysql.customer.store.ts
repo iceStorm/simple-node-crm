@@ -1,4 +1,5 @@
 import { Injectable } from "src/core/decorators"
+import { Employee } from "src/entities"
 import Customer from "../customer.model"
 import CustomerStore from "../customer.store"
 import CustomerNotFoundError from "../errors/CustomerNotFoundError"
@@ -6,7 +7,13 @@ import CustomerNotFoundError from "../errors/CustomerNotFoundError"
 @Injectable()
 export class MySQLCustomerStore extends CustomerStore {
     getAll(): Promise<Customer[]> {
-        return Customer.findAll()
+        return Customer.findAll({
+            include: [
+                {
+                    model: Employee,
+                },
+            ],
+        })
     }
 
     getById(id: number): Promise<Customer | null> {

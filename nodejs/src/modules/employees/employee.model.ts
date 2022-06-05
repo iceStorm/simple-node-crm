@@ -78,8 +78,8 @@ export default class Employee extends Model<Employee> {
     @BelongsTo(() => Employee)
     reportsToEmployee!: Employee
 
-    @HasMany(() => Employee)
-    responsibleFor?: Employee[]
+    // @HasMany(() => Employee)
+    // responsibleFor?: Employee[]
 
     @HasOne(() => User)
     user!: User
