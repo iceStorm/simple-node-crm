@@ -2,10 +2,10 @@ import { Request, Response } from "express"
 import { Controller as Controller } from "src/core/decorators"
 import { Get } from "src/core/decorators/http.decorator"
 import { Authenticated } from "src/modules/user/middlewares"
+import { AppErrorHandler } from "./app.error-handler"
 import AppService from "./app.service"
 
-
-@Controller("")
+@Controller("", AppErrorHandler)
 export default class AppController {
     constructor(private appService: AppService) {}
 

@@ -11,16 +11,3 @@ export const UserErrorHandler = (error: Error, req: Request, res: Response, next
 
     res.send(error)
 }
-
-
-export const UserErrorHandler2 = (error: Error, req: Request, res: Response, next: NextFunction) => {
-    // switch (error.name) {
-    //     case "":
-    //         break
-
-    //     default:
-    //         break
-    // }
-
-    res.send(error)
-}

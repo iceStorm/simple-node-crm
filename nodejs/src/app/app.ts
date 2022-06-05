@@ -162,6 +162,8 @@ export default class App {
             // INIT AND INJECT DEPENDENCIES
             const controllerInstance = new controller(...DIContainer.findDependencies(controller))
 
+            // console.log(controller, controller.prototype, routerHandlers)
+
             for (const handler of routerHandlers) {
                 // getting current handler's middlewares
                 const currentHandlerMiddlewares = middlewares[handler.method.name] || []
@@ -192,7 +194,7 @@ export default class App {
             this._instance.use(routerRootPath, router)
         }
 
-        // this.showRoutingTable(routesMapTable)
+        this.showRoutingTable(routesMapTable)
         console.log(DIContainer)
     }
 
