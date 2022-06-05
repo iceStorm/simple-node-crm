@@ -63,13 +63,13 @@ export default class Employee extends Model<Employee> {
     @Column({ type: DataType.STRING(50) })
     jobTitle!: string
 
-    // @ForeignKey(() => Role)
+    @ForeignKey(() => Role)
     // @AllowNull(false)
-    // @Column
-    // roleId!: number
+    @Column
+    roleId!: number
 
-    // @BelongsTo(() => Role)
-    // role!: Role
+    @BelongsTo(() => Role)
+    role!: Role
 
     @ForeignKey(() => Employee)
     @Column({ type: DataType.INTEGER({ precision: 11 }) })
@@ -78,8 +78,8 @@ export default class Employee extends Model<Employee> {
     @BelongsTo(() => Employee)
     reportsToEmployee!: Employee
 
-    @HasMany(() => Employee)
-    responsibleFor?: Employee[]
+    // @HasMany(() => Employee)
+    // responsibleFor?: Employee[]
 
     @HasOne(() => User)
     user!: User

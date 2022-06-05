@@ -7,37 +7,27 @@ import { JWTService } from "src/common/services/jwt.service"
 /**
  * Indicate that an incoming request contains valid JWT token.
  */
-export const Authenticated = function (target: Object, propertyKey: string, descriptor: PropertyDescriptor) {
-    const originalMethod = descriptor.value
+export const Authenticated = async function (req: Request, res: Response, next: NextFunction) {
+    console.log("Authenticated this:", this)
+    // console.log(next)
 
-    DecoratorMiddlewareFactory.create({
-        descriptor,
-        originalMethodName: propertyKey,
-        handlerMethod: async function (req: Request, res: Response, next: NextFunction) {
-            console.log("Authenticated this:", this)
-            // console.log(next)
+    try {
+        const bearer = req.headers.authorization?.split("Bearer ")
 
-            try {
-                let bearer = req.headers.authorization?.split("Bearer ")
+        // token not provided
+        if (bearer == undefined) {
+            return res.status(401).end("The request did not provide a bearer token for authentication")
+        }
 
-                // token not provided
-                if (bearer == undefined) {
-                    return res.status(401).end("The request did not provide a bearer token for authentication")
-                }
+        // token provided
+        const token = bearer[1]
+        console.log("token:", token)
 
-                // token provided
-                const token = bearer[1]
-                console.log("token:", token)
+        const jwt = await JWTService.verify(token)
 
-                const jwt = await JWTService.verify(token)
-
-                // next()
-            } catch (error: any) {
-                console.log(error)
-                res.status(401).send(error)
-            }
-
-            return originalMethod.bind(this)(...arguments)
-        },
-    })
+        // next()
+    } catch (error: any) {
+        console.log(error)
+        res.status(401).send(error)
+    }
 }

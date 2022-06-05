@@ -1,6 +1,7 @@
 import { SequelizeAdapter } from "src/common/db/mysql"
 import { Injectable } from "src/core/decorators"
 import { Customer } from "src/entities"
+import { Role } from "src/modules/user/user.model"
 import Employee from "../employee.model"
 import EmployeeStore from "../employee.store"
 import EmployeeNotFoundError from "../errors/EmployeeNotFoundError"
@@ -28,7 +29,9 @@ export class MySQLEmployeeStore extends EmployeeStore {
     }
 
     getAll(): Promise<Employee[]> {
-        return Employee.findAll()
+        return Employee.findAll({
+            include: [{ model: Customer }, { model: Employee }, { model: Role }],
+        })
     }
 
     getById(id: number): Promise<Employee | null> {

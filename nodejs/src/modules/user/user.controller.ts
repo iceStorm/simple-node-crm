@@ -9,6 +9,8 @@ import User from "./user.model"
 import Guard from "src/core/decorators/guard.decorator"
 import { UserErrorHandler } from "./user.error_handler"
 import { NotDuplicateUser } from "./middlewares/not_duplicate_user.middleware"
+import NotProvideEnoughDataToRegisterError from "./errors/NotProvideEnoughDataToRegister"
+import { CheckRegsiterBody } from "./middlewares/check_regsiter_body"
 
 @Controller("/users", UserErrorHandler)
 export default class UserController extends BaseController<User, UserService, UserStore> {
@@ -35,7 +37,7 @@ export default class UserController extends BaseController<User, UserService, Us
         }
     }
 
-    @Guard([NotDuplicateUser])
+    @Guard([CheckRegsiterBody, NotDuplicateUser])
     @Post("/register")
     async register(req: Request, res: Response, next: NextFunction) {
         try {
@@ -43,7 +45,7 @@ export default class UserController extends BaseController<User, UserService, Us
             const { username, password, employeeEmail } = req.body
 
             if (username === undefined || password === undefined || employeeEmail === undefined) {
-                next("Please provide enough employee's email, username and password")
+                next(new NotProvideEnoughDataToRegisterError())
             }
 
             const jwtToken = await this.usersService.registerUser(employeeEmail, username, password)
