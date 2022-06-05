@@ -1,2 +1,5 @@
 export { default as Authenticated } from "./authenticated.middleware"
 export { default as Roles } from "./roles.middleware"
+export { default as EmailNotRegistered } from "./email-not-registered"
+export { default as EmailExistInDB } from "./email-exist-in-db"
+export { default as CheckRegsiterBody } from "./check-regsiter-body"

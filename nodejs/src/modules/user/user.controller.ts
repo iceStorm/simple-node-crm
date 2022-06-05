@@ -7,7 +7,7 @@ import BaseController from "src/common/base.controller"
 import UserStore from "./user.store"
 import User from "./user.model"
 import { UserErrorHandler } from "./user.error-handler"
-import { Authenticated, Roles } from "./middlewares"
+import { CheckRegsiterBody, EmailExistInDB, EmailNotRegistered } from "./middlewares"
 
 @Controller("/users", UserErrorHandler)
 export default class UserController extends BaseController<User, UserService, UserStore> {
@@ -16,7 +16,7 @@ export default class UserController extends BaseController<User, UserService, Us
     }
 
     @Post("/login")
-    async login(req: Request, res: Response) {
+    async login(req: Request, res: Response, next: NextFunction) {
         try {
             console.log(req.body)
             const { username, password } = req.body
@@ -29,28 +29,23 @@ export default class UserController extends BaseController<User, UserService, Us
             res.status(200).send(jwtToken)
         } catch (error) {
             console.log(error)
-
-            res.status(500).send(error)
+            next(error)
         }
     }
 
-    @Authenticated
-    @Roles("President", "Leader")
+    @CheckRegsiterBody
+    @EmailExistInDB
+    @EmailNotRegistered
     @Post("/register")
     async register(req: Request, res: Response, next: NextFunction) {
         try {
-            res.send("ok")
-            // console.log(req.body)
-            // const { username, password, employeeEmail } = req.body
+            const { username, password, email } = req.body
 
-            // if (username === undefined || password === undefined || employeeEmail === undefined) {
-            //     next(new NotProvideEnoughDataToRegisterError())
-            // }
+            const jwtToken = await this.usersService.registerUser(email, username, password)
 
-            // const jwtToken = await this.usersService.registerUser(employeeEmail, username, password)
-            // res.status(200).send(jwtToken)
+            res.status(200).send(jwtToken)
         } catch (error: any) {
-            next(error.message)
+            next(error)
         }
     }
 }
