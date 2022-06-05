@@ -16,7 +16,7 @@ export type AppRoute = {
 const HTTPMethodDecoratorFactory = (method: HTTPMethod) => {
     return (path: string) => {
         return (target: object, propertyKey: string, descriptor: PropertyDescriptor) => {
-            // console.log(target)
+            console.log(target.constructor)
 
             // getting the method's class (class type, not a string)
             const className = target.constructor

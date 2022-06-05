@@ -142,22 +142,42 @@ export default class App {
         const routesMapTable: Array<RouteMapItem> = []
 
         for (const controller of controllers) {
-            // getting controller's metadata
+            // ROOT PATH
             const routerRootPath = Reflect.getMetadata(DECORATOR_KEYS.ROOT_PATH, controller)
 
-            // getting router's handler methods (getAll, getById...)
+            // GETTING ROUTER'S HANDLER METHODS (GETALL, GETBYID...)
             const routerHandlers = Reflect.getMetadata(DECORATOR_KEYS.ROUTES, controller) ?? []
+
+            // ROUTER GUARD MIDDLEWARES (PRE-MIDDLEWARES)
+            const middlewares = Reflect.getMetadata(DECORATOR_KEYS.GUARD_MIDDLEWARES, controller) ?? []
+            console.log(controller + "middlewares:", middlewares, "\n")
+
+            // ERROR MIDDLWARES (POST MIDDLEWARES)
+            const errorMiddlewares = Reflect.getMetadata(DECORATOR_KEYS.ERROR_MIDDLEWARES, controller) ?? []
+            console.log("error middlewares:", errorMiddlewares, "\n")
 
             // each controller has its own router on the root path
             const router = express.Router()
 
-            // init and inject dependencies
+            // INIT AND INJECT DEPENDENCIES
             const controllerInstance = new controller(...DIContainer.findDependencies(controller))
 
             for (const handler of routerHandlers) {
+                // getting current handler's middlewares
+                const currentHandlerMiddlewares = middlewares[handler.method.name] || []
+                currentHandlerMiddlewares.reverse()
+
+                for (let middleware of currentHandlerMiddlewares) {
+                    middleware = middleware.bind(controllerInstance)
+                }
+
                 // use the actual handler method at the end (middlewares need to be run first)
-                router[(handler as AppRoute).httpMethod](handler.path, handler.method.bind(controllerInstance))
-                // console.log(handler.method, handler.method.prototype)
+                router[(handler as AppRoute).httpMethod](
+                    handler.path,
+                    ...currentHandlerMiddlewares,
+                    handler.method.bind(controllerInstance),
+                    ...errorMiddlewares
+                )
 
                 routesMapTable.push({
                     router: routerRootPath,
@@ -172,7 +192,7 @@ export default class App {
             this._instance.use(routerRootPath, router)
         }
 
-        this.showRoutingTable(routesMapTable)
+        // this.showRoutingTable(routesMapTable)
         console.log(DIContainer)
     }
 

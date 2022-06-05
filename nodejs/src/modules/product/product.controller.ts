@@ -2,8 +2,6 @@ import { Controller } from "src/core/decorators"
 import { Request, Response } from "express"
 import { Get, Post, Put, Delete } from "src/core/decorators/http.decorator"
 
-import { Authenticated } from "../user/middlewares/authenticated.middleware"
-import { DIContainer } from "src/core/injector"
 import ProductService from "./product.service"
 import BaseController from "src/common/base.controller"
 import Product from "./product.model"

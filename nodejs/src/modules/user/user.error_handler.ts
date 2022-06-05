@@ -1,11 +1,26 @@
-import { NextFunction } from "express"
+import { NextFunction, Request, Response } from "express"
 
 export const UserErrorHandler = (error: Error, req: Request, res: Response, next: NextFunction) => {
-    switch (error.name) {
-        case "":
-            break
+    // switch (error.name) {
+    //     case "":
+    //         break
 
-        default:
-            break
-    }
+    //     default:
+    //         break
+    // }
+
+    res.send(error)
+}
+
+
+export const UserErrorHandler2 = (error: Error, req: Request, res: Response, next: NextFunction) => {
+    // switch (error.name) {
+    //     case "":
+    //         break
+
+    //     default:
+    //         break
+    // }
+
+    res.send(error)
 }
