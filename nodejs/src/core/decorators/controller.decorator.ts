@@ -1,4 +1,4 @@
-import { NextFunction } from "express"
+import { NextFunction, Request, Response} from "express"
 import DECORATOR_KEYS from "./constants"
 
 export type ErrorMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => void

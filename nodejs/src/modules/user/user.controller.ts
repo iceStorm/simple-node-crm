@@ -6,11 +6,8 @@ import UserService from "./user.service"
 import BaseController from "src/common/base.controller"
 import UserStore from "./user.store"
 import User from "./user.model"
-import Guard from "src/core/decorators/guard.decorator"
-import { UserErrorHandler } from "./user.error_handler"
-import { NotDuplicateUser } from "./middlewares/not_duplicate_user.middleware"
-import NotProvideEnoughDataToRegisterError from "./errors/NotProvideEnoughDataToRegister"
-import { CheckRegsiterBody } from "./middlewares/check_regsiter_body"
+import { UserErrorHandler, UserErrorHandler2 } from "./user.error_handler"
+import { Authenticated, Roles } from "./middlewares"
 
 @Controller("/users", UserErrorHandler)
 export default class UserController extends BaseController<User, UserService, UserStore> {
@@ -37,19 +34,21 @@ export default class UserController extends BaseController<User, UserService, Us
         }
     }
 
-    @Guard([CheckRegsiterBody, NotDuplicateUser])
+    @Authenticated
+    @Roles("President", "Leader")
     @Post("/register")
     async register(req: Request, res: Response, next: NextFunction) {
         try {
-            console.log(req.body)
-            const { username, password, employeeEmail } = req.body
+            res.send("ok")
+            // console.log(req.body)
+            // const { username, password, employeeEmail } = req.body
 
-            if (username === undefined || password === undefined || employeeEmail === undefined) {
-                next(new NotProvideEnoughDataToRegisterError())
-            }
+            // if (username === undefined || password === undefined || employeeEmail === undefined) {
+            //     next(new NotProvideEnoughDataToRegisterError())
+            // }
 
-            const jwtToken = await this.usersService.registerUser(employeeEmail, username, password)
-            res.status(200).send(jwtToken)
+            // const jwtToken = await this.usersService.registerUser(employeeEmail, username, password)
+            // res.status(200).send(jwtToken)
         } catch (error: any) {
             next(error.message)
         }

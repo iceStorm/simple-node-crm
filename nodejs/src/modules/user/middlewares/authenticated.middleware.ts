@@ -1,22 +1,18 @@
-import { NextFunction, Request, Response } from "express"
-import * as jose from "jose"
-import jwt from "jsonwebtoken"
-import { DecoratorMiddlewareFactory } from "src/common/middlewares/base.middleware"
 import { JWTService } from "src/common/services/jwt.service"
+import { MiddlewareDecoratorFactory } from "src/core/decorators/middleware.decorator"
 
 /**
  * Indicate that an incoming request contains valid JWT token.
  */
-export const Authenticated = async function (req: Request, res: Response, next: NextFunction) {
-    console.log("Authenticated this:", this)
-    // console.log(next)
+const Authenticated = MiddlewareDecoratorFactory(async function checkAuthenticated(req, res, next) {
+    console.log("auth check")
 
     try {
         const bearer = req.headers.authorization?.split("Bearer ")
 
         // token not provided
         if (bearer == undefined) {
-            return res.status(401).end("The request did not provide a bearer token for authentication")
+            return next("The request did not provide a bearer token for authentication")
         }
 
         // token provided
@@ -25,9 +21,11 @@ export const Authenticated = async function (req: Request, res: Response, next: 
 
         const jwt = await JWTService.verify(token)
 
-        // next()
+        next()
     } catch (error: any) {
         console.log(error)
-        res.status(401).send(error)
+        next(error)
     }
-}
+})
+
+export default Authenticated
